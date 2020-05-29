@@ -1,4 +1,4 @@
-import './style';
+import './style/index.scss';
 import validator from 'option-validator';
 import Emitter from './utils/emitter';
 import * as utils from './utils';
@@ -25,12 +25,16 @@ import Plugins from './plugins';
 import Mobile from './mobile';
 
 let id = 0;
-class Artplayer extends Emitter {
+const instances = [];
+export default class Artplayer extends Emitter {
     constructor(option) {
         super();
         this.option = validator(utils.mergeDeep(Artplayer.option, option), scheme);
         this.isFocus = false;
         this.isDestroy = false;
+        this.userAgent = utils.userAgent;
+        this.isMobile = utils.isMobile;
+        this.isWechat = utils.isWechat;
         this.whitelist = new Whitelist(this);
         this.template = new Template(this);
         this.events = new Events(this);
@@ -56,7 +60,11 @@ class Artplayer extends Emitter {
 
         id += 1;
         this.id = id;
-        Artplayer.instances.push(this);
+        instances.push(this);
+    }
+
+    static get instances() {
+        return instances;
     }
 
     static get version() {
@@ -103,6 +111,7 @@ class Artplayer extends Emitter {
             muted: false,
             autoplay: false,
             autoSize: false,
+            autoMin: false,
             loop: false,
             flip: false,
             playbackRate: false,
@@ -112,6 +121,7 @@ class Artplayer extends Emitter {
             hotkey: true,
             pip: false,
             mutex: true,
+            light: false,
             backdrop: true,
             fullscreen: false,
             fullscreenWeb: false,
@@ -119,12 +129,11 @@ class Artplayer extends Emitter {
             miniProgressBar: false,
             localVideo: false,
             localSubtitle: false,
-            autoPip: false,
             networkMonitor: false,
             layers: [],
             contextmenu: [],
-            quality: [],
             controls: [],
+            quality: [],
             highlight: [],
             plugins: [],
             whitelist: [],
@@ -141,7 +150,7 @@ class Artplayer extends Emitter {
             },
             moreVideoAttr: {
                 controls: false,
-                preload: 'metadata',
+                preload: utils.isSafari ? 'auto' : 'metadata',
             },
             icons: {},
             customType: {},
@@ -152,15 +161,11 @@ class Artplayer extends Emitter {
     destroy(removeHtml = true) {
         this.events.destroy();
         this.template.destroy(removeHtml);
-        Artplayer.instances.splice(Artplayer.instances.indexOf(this), 1);
+        instances.splice(instances.indexOf(this), 1);
         this.isDestroy = true;
         this.emit('destroy');
     }
 }
-
-Object.defineProperty(Artplayer, 'instances', {
-    value: [],
-});
 
 // eslint-disable-next-line no-console
 console.log(
@@ -169,5 +174,3 @@ console.log(
     'color: #fff; background: #4bc729',
     '',
 );
-
-export default Artplayer;

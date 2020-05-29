@@ -1,10 +1,9 @@
 {
   "name": "artplayer",
-  "version": "3.3.2",
+  "version": "3.5.9",
   "expose": "Artplayer",
   "description": "ArtPlayer.js is a modern and full featured HTML5 video player",
   "main": "dist/artplayer.js",
-  "style": "dist/artplayer.css",
   "types": "types/artplayer.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -25,7 +24,7 @@
   "homepage": "https://github.com/zhw2590582/ArtPlayer#readme",
   "dependencies": {
     "option-validator": "^2.0.5",
-    "screenfull": "^5.0.0"
+    "screenfull": "^5.0.2"
   },
   "gitHead": "0a3a20568e37f99972eefb01d4b1dcf4036a46db"
 }

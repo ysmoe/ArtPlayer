@@ -4,18 +4,16 @@ export default class Whitelist {
             constructor: { kindOf },
             option: { whitelist },
         } = art;
-        this.ua = navigator.userAgent;
-        this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(this.ua);
         this.state =
-            !this.isMobile ||
-            whitelist.some(item => {
+            !art.isMobile ||
+            whitelist.some((item) => {
                 switch (kindOf(item)) {
                     case 'string':
-                        return this.ua.indexOf(item) > -1;
+                        return item === '*' || art.userAgent.indexOf(item) > -1;
                     case 'function':
-                        return item(this.ua);
+                        return item(art.userAgent);
                     case 'regexp':
-                        return item.test(this.ua);
+                        return item.test(art.userAgent);
                     default:
                         return false;
                 }

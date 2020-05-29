@@ -117,6 +117,36 @@
 
   var inherits = _inherits;
 
+  function styleInject(css, ref) {
+    if ( ref === void 0 ) ref = {};
+    var insertAt = ref.insertAt;
+
+    if (!css || typeof document === 'undefined') { return; }
+
+    var head = document.head || document.getElementsByTagName('head')[0];
+    var style = document.createElement('style');
+    style.type = 'text/css';
+
+    if (insertAt === 'top') {
+      if (head.firstChild) {
+        head.insertBefore(style, head.firstChild);
+      } else {
+        head.appendChild(style);
+      }
+    } else {
+      head.appendChild(style);
+    }
+
+    if (style.styleSheet) {
+      style.styleSheet.cssText = css;
+    } else {
+      style.appendChild(document.createTextNode(css));
+    }
+  }
+
+  var css = ".art-undercover{background:#000;position:fixed;top:0;left:0;display:none;height:100%;width:100%;opacity:.9;z-index:10}.art-video-player{display:-webkit-box;display:-ms-flexbox;display:flex;position:relative;margin:0 auto;z-index:20;width:100%;height:100%;outline:0;zoom:1;font-family:Roboto,Arial,Helvetica,sans-serif;color:#eee;text-align:left;direction:ltr;font-size:14px;line-height:1.3;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-tap-highlight-color:rgba(0,0,0,0);-ms-touch-action:manipulation;touch-action:manipulation;-ms-high-contrast-adjust:none}.art-video-player *{margin:0;padding:0;-webkit-box-sizing:border-box;box-sizing:border-box}.art-video-player ::-webkit-scrollbar{width:5px}.art-video-player ::-webkit-scrollbar-thumb{background-color:#666}.art-video-player ::-webkit-scrollbar-thumb:hover{background-color:#ccc}.art-video-player .art-icon{display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;line-height:1.5}.art-video-player .art-icon svg{fill:#fff}.art-video-player img{max-width:100%;vertical-align:top}.art-video-player>object{display:block;position:absolute;top:0;left:0;height:100%;width:100%;overflow:hidden;pointer-events:none;z-index:-1}@supports ((-webkit-backdrop-filter:initial) or (backdrop-filter:initial)){.art-video-player .art-backdrop-filter{-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);background-color:rgba(0,0,0,.7)!important}}.art-video-player .art-video{position:absolute;z-index:10;left:0;top:0;right:0;bottom:0;width:100%;height:100%;background-color:#000;cursor:pointer}.art-video-player .art-subtitle{display:none;position:absolute;z-index:20;bottom:10px;width:100%;padding:0 20px;text-align:center;color:#fff;font-size:20px;pointer-events:none;text-shadow:.5px .5px .5px rgba(0,0,0,.5)}.art-video-player .art-subtitle p{word-break:break-all;height:-webkit-fit-content;height:-moz-fit-content;height:fit-content;margin:5px 0}.art-video-player.art-subtitle-show .art-subtitle{display:block}.art-video-player.art-control-show .art-subtitle{bottom:40px}.art-video-player .art-danmuku{z-index:30}.art-video-player .art-danmuku,.art-video-player .art-layers{position:absolute;left:0;top:0;right:0;bottom:0;width:100%;height:100%;overflow:hidden;pointer-events:none}.art-video-player .art-layers{display:none;z-index:40}.art-video-player .art-layers .art-layer{pointer-events:auto}.art-video-player.art-layer-show .art-layers{display:block}.art-video-player .art-mask{display:none;z-index:50;left:0;top:0;right:0;bottom:0;width:100%;height:100%;overflow:hidden;pointer-events:none}.art-video-player .art-mask,.art-video-player .art-mask .art-state{-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;position:absolute}.art-video-player .art-mask .art-state{right:30px;bottom:55px;width:60px;height:60px;opacity:.6}.art-video-player.art-mask-show .art-mask,.art-video-player .art-mask .art-state{display:-webkit-box;display:-ms-flexbox;display:flex}.art-video-player .art-loading{display:none;position:absolute;z-index:70;left:0;top:0;right:0;bottom:0;width:100%;height:100%;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;pointer-events:none}.art-video-player.art-loading-show .art-loading{display:-webkit-box;display:-ms-flexbox;display:flex}.art-video-player .art-bottom{position:absolute;z-index:60;left:0;right:0;bottom:0;height:100px;padding:55px 10px 0;opacity:0;visibility:hidden;-webkit-transition:all .2s ease-in-out;transition:all .2s ease-in-out;pointer-events:none;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAADGCAYAAAAT+OqFAAAAdklEQVQoz42QQQ7AIAgEF/T/D+kbq/RWAlnQyyazA4aoAB4FsBSA/bFjuF1EOL7VbrIrBuusmrt4ZZORfb6ehbWdnRHEIiITaEUKa5EJqUakRSaEYBJSCY2dEstQY7AuxahwXFrvZmWl2rh4JZ07z9dLtesfNj5q0FU3A5ObbwAAAABJRU5ErkJggg==) repeat-x bottom}.art-video-player .art-bottom .art-progress{position:relative;pointer-events:auto}.art-video-player .art-bottom .art-progress .art-control-progress{position:relative;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-ms-flex-align:center;align-items:center;height:4px;cursor:pointer}.art-video-player .art-bottom .art-progress .art-control-progress .art-control-progress-inner{position:relative;height:50%;width:100%;background:hsla(0,0%,100%,.2)}.art-video-player .art-bottom .art-progress .art-control-progress .art-control-progress-inner .art-progress-loaded{position:absolute;z-index:10;left:0;top:0;right:0;bottom:0;height:100%;width:0;background:hsla(0,0%,100%,.4)}.art-video-player .art-bottom .art-progress .art-control-progress .art-control-progress-inner .art-progress-played{position:absolute;z-index:20;left:0;top:0;right:0;bottom:0;height:100%;width:0}.art-video-player .art-bottom .art-progress .art-control-progress .art-control-progress-inner .art-progress-highlight{position:absolute;z-index:30;left:0;top:0;right:0;bottom:0;height:100%;pointer-events:none}.art-video-player .art-bottom .art-progress .art-control-progress .art-control-progress-inner .art-progress-highlight span{display:inline-block;position:absolute;left:0;top:0;width:7px;height:100%;background:#fff;pointer-events:auto}.art-video-player .art-bottom .art-progress .art-control-progress .art-control-progress-inner .art-progress-indicator{display:none;position:absolute;z-index:40;top:-5px;left:-6.5px;width:13px;height:13px;border-radius:50%}.art-video-player .art-bottom .art-progress .art-control-progress .art-control-progress-inner .art-progress-indicator.art-show-indicator{display:block}.art-video-player .art-bottom .art-progress .art-control-progress .art-control-progress-inner .art-progress-tip{display:none;position:absolute;z-index:50;top:-25px;left:0;height:20px;padding:0 5px;line-height:20px;color:#fff;font-size:12px;text-align:center;background:rgba(0,0,0,.7);border-radius:3px;font-weight:700;white-space:nowrap}.art-video-player .art-bottom .art-progress .art-control-progress:hover .art-control-progress-inner{height:100%}.art-video-player .art-bottom .art-progress .art-control-progress:hover .art-control-progress-inner .art-progress-indicator,.art-video-player .art-bottom .art-progress .art-control-progress:hover .art-control-progress-inner .art-progress-tip{display:block}.art-video-player .art-bottom .art-progress .art-control-thumbnails{display:none;position:absolute;bottom:8px;left:0;pointer-events:none;background-color:rgba(0,0,0,.7)}.art-video-player .art-bottom .art-progress .art-control-loop{display:none;position:absolute;width:100%;height:100%;left:0;top:0;right:0;bottom:0;pointer-events:none}.art-video-player .art-bottom .art-progress .art-control-loop .art-loop-point{position:absolute;left:0;top:-2px;width:2px;height:8px;background:hsla(0,0%,100%,.75)}.art-video-player .art-bottom .art-controls{position:relative;pointer-events:auto;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;height:40px;padding:5px 0}.art-video-player .art-bottom .art-controls,.art-video-player .art-bottom .art-controls .art-controls-left,.art-video-player .art-bottom .art-controls .art-controls-right{display:-webkit-box;display:-ms-flexbox;display:flex}.art-video-player .art-bottom .art-controls .art-control{opacity:.9;font-size:12px;height:36px;min-width:36px;line-height:36px;text-align:center;cursor:pointer}.art-video-player .art-bottom .art-controls .art-control .art-icon{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;float:left;height:36px;width:36px}.art-video-player .art-bottom .art-controls .art-control:hover{opacity:1}.art-video-player .art-bottom .art-controls .art-control-onlyText{padding:0 10px}.art-video-player .art-bottom .art-controls .art-control-volume .art-volume-panel{position:relative;float:left;width:0;height:100%;-webkit-transition:margin .2s cubic-bezier(.4,0,1,1),width .2s cubic-bezier(.4,0,1,1);transition:margin .2s cubic-bezier(.4,0,1,1),width .2s cubic-bezier(.4,0,1,1);overflow:hidden}.art-video-player .art-bottom .art-controls .art-control-volume .art-volume-panel .art-volume-slider-handle{position:absolute;top:50%;left:0;width:12px;height:12px;border-radius:12px;margin-top:-6px;background:#fff}.art-video-player .art-bottom .art-controls .art-control-volume .art-volume-panel .art-volume-slider-handle:before{left:-54px;background:#fff}.art-video-player .art-bottom .art-controls .art-control-volume .art-volume-panel .art-volume-slider-handle:after{left:6px;background:hsla(0,0%,100%,.2)}.art-video-player .art-bottom .art-controls .art-control-volume .art-volume-panel .art-volume-slider-handle:after,.art-video-player .art-bottom .art-controls .art-control-volume .art-volume-panel .art-volume-slider-handle:before{content:\"\";position:absolute;display:block;top:50%;height:3px;margin-top:-2px;width:60px}.art-video-player .art-bottom .art-controls .art-control-volume:hover .art-volume-panel{width:60px}.art-video-player .art-bottom .art-controls .art-control-quality{position:relative;z-index:30}.art-video-player .art-bottom .art-controls .art-control-quality .art-qualitys{display:none;position:absolute;bottom:35px;width:100px;padding:5px 0;text-align:center;color:#fff;background:rgba(0,0,0,.8);border-radius:3px}.art-video-player .art-bottom .art-controls .art-control-quality .art-qualitys .art-quality-item{height:30px;line-height:30px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-shadow:0 0 2px rgba(0,0,0,.5)}.art-video-player .art-bottom .art-controls .art-control-quality .art-qualitys .art-quality-item:hover{background-color:hsla(0,0%,100%,.1)}.art-video-player .art-bottom .art-controls .art-control-quality:hover .art-qualitys{display:block}.art-video-player.art-control-show .art-bottom,.art-video-player.art-hover .art-bottom{opacity:1;visibility:visible}.art-video-player.art-destroy .art-progress-indicator,.art-video-player.art-destroy .art-progress-tip,.art-video-player.art-error .art-progress-indicator,.art-video-player.art-error .art-progress-tip{display:none!important}.art-video-player .art-notice{display:none;font-size:14px;position:absolute;z-index:80;left:0;top:0;padding:10px;width:100%;pointer-events:none}.art-video-player .art-notice .art-notice-inner{display:inline-block;padding:5px 10px;color:#fff;background:rgba(0,0,0,.6);border-radius:3px}.art-video-player.art-notice-show .art-notice{display:-webkit-box;display:-ms-flexbox;display:flex}.art-video-player .art-contextmenus{display:none;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;position:absolute;z-index:120;left:0;top:0;min-width:200px;padding:5px 0;background:rgba(0,0,0,.9);border-radius:3px}.art-video-player .art-contextmenus .art-contextmenu{cursor:pointer;font-size:12px;display:block;color:#fff;padding:10px 15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-shadow:0 0 2px rgba(0,0,0,.5);border-bottom:1px solid hsla(0,0%,100%,.1)}.art-video-player .art-contextmenus .art-contextmenu a{color:#fff;text-decoration:none}.art-video-player .art-contextmenus .art-contextmenu span{display:inline-block;padding:0 7px}.art-video-player .art-contextmenus .art-contextmenu span.art-current,.art-video-player .art-contextmenus .art-contextmenu span:hover{color:#00c9ff}.art-video-player .art-contextmenus .art-contextmenu:hover{background-color:hsla(0,0%,100%,.1)}.art-video-player .art-contextmenus .art-contextmenu:last-child{border-bottom:none}.art-video-player.art-contextmenu-show .art-contextmenus,.art-video-player .art-settings{display:-webkit-box;display:-ms-flexbox;display:flex}.art-video-player .art-settings{-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;position:absolute;z-index:90;left:0;top:0;height:100%;width:100%;opacity:0;visibility:hidden;pointer-events:none;overflow:hidden}.art-video-player .art-settings .art-setting-inner{position:absolute;top:0;right:-300px;bottom:0;width:300px;height:100%;font-size:12px;background:rgba(0,0,0,.9);-webkit-transition:all .2s ease-in-out;transition:all .2s ease-in-out;overflow:auto}.art-video-player .art-settings .art-setting-inner .art-setting-body{overflow-y:auto;width:100%;height:100%}.art-video-player .art-settings .art-setting-inner .art-setting-body .art-setting{border-bottom:1px solid hsla(0,0%,100%,.1);padding:10px 15px}.art-video-player .art-settings .art-setting-inner .art-setting-body .art-setting .art-setting-header{margin-bottom:5px}.art-video-player .art-settings .art-setting-radio{display:-webkit-box;display:-ms-flexbox;display:flex}.art-video-player .art-settings .art-setting-radio .art-radio-item{-webkit-box-flex:1;-ms-flex:1;flex:1;padding:0 2px}.art-video-player .art-settings .art-setting-radio .art-radio-item button{height:22px;width:100%;border:none;outline:none;color:#fff;background:hsla(0,0%,100%,.2);border-radius:2px}.art-video-player .art-settings .art-setting-radio .art-radio-item.current button{background-color:#00a1d6}.art-video-player .art-settings .art-setting-range input{width:100%;height:3px;outline:none;-webkit-appearance:none;-moz-appearance:none;appearance:none;background-color:hsla(0,0%,100%,.5)}.art-video-player .art-settings .art-setting-checkbox input{height:14px;width:14px;margin-right:5px}.art-video-player .art-settings .art-setting-upload{display:-webkit-box;display:-ms-flexbox;display:flex}.art-video-player .art-settings .art-setting-upload .art-upload-btn{width:80px;height:22px;line-height:22px;border:none;outline:none;color:#fff;background:hsla(0,0%,100%,.2);border-radius:2px;text-align:center}.art-video-player .art-settings .art-setting-upload .art-upload-value{-webkit-box-flex:1;-ms-flex:1;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;height:22px;line-height:22px;padding-left:10px}.art-video-player.art-setting-show .art-settings{opacity:1;visibility:visible;pointer-events:auto}.art-video-player.art-setting-show .art-settings .art-setting-inner{right:0}.art-video-player .art-info{display:none;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;position:absolute;left:10px;top:10px;z-index:100;width:350px;min-height:150px;padding:10px;color:#fff;font-size:12px;font-family:Noto Sans CJK SC DemiLight,Roboto,Segoe UI,Tahoma,Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased;background:rgba(0,0,0,.9)}.art-video-player .art-info .art-info-item{display:-webkit-box;display:-ms-flexbox;display:flex;margin-bottom:5px}.art-video-player .art-info .art-info-item .art-info-title{width:100px;text-align:right}.art-video-player .art-info .art-info-item .art-info-content{-webkit-box-flex:1;-ms-flex:1;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-left:5px}.art-video-player .art-info .art-info-close{position:absolute;top:5px;right:5px;cursor:pointer}.art-video-player.art-info-show .art-info{display:-webkit-box;display:-ms-flexbox;display:flex}.art-video-player.art-hide-cursor *{cursor:none!important}.art-video-player[data-aspect-ratio] video{-webkit-box-sizing:content-box;box-sizing:content-box;-o-object-fit:fill;object-fit:fill}.art-video-player.art-fullscreen-web{position:fixed;z-index:9999;width:100%!important;height:100%!important;left:0;top:0;right:0;bottom:0}.art-fullscreen-rotate{position:fixed;z-index:9999;width:100%;height:100%;left:0;top:0;right:0;bottom:0;background:#000}.art-video-player .art-mini-header{display:none;position:absolute;z-index:110;left:0;top:0;right:0;height:35px;line-height:35px;color:#fff;background:rgba(0,0,0,.5);-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;opacity:0;visibility:hidden;-webkit-transition:all .2s ease-in-out;transition:all .2s ease-in-out}.art-video-player .art-mini-header .art-mini-title{-webkit-box-flex:1;-ms-flex:1;flex:1;padding:0 10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:move}.art-video-player .art-mini-header .art-mini-close{width:35px;text-align:center;font-size:22px;cursor:pointer}.art-video-player.art-is-dragging{opacity:.7}.art-video-player.art-mini{position:fixed;z-index:9999;width:400px;height:225px;-webkit-box-shadow:0 2px 5px 0 rgba(0,0,0,.16),0 3px 6px 0 rgba(0,0,0,.2);box-shadow:0 2px 5px 0 rgba(0,0,0,.16),0 3px 6px 0 rgba(0,0,0,.2)}.art-video-player.art-mini .art-mini-header{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.art-video-player.art-mini.art-hover .art-mini-header{opacity:1;visibility:visible}.art-video-player.art-mini .art-mask .art-state{position:static}.art-video-player.art-mini .art-bottom,.art-video-player.art-mini .art-contextmenu,.art-video-player.art-mini .art-danmu,.art-video-player.art-mini .art-info,.art-video-player.art-mini .art-layers,.art-video-player.art-mini .art-notice,.art-video-player.art-mini .art-setting,.art-video-player.art-mini .art-subtitle{display:none!important}.art-auto-size{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}.art-video-player[data-flip=horizontal] .art-video{-webkit-transform:scaleX(-1);transform:scaleX(-1)}.art-video-player[data-flip=vertical] .art-video{-webkit-transform:scaleY(-1);transform:scaleY(-1)}:root{--balloon-color:rgba(16,16,16,0.95);--balloon-font-size:12px;--balloon-move:4px}button[aria-label][data-balloon-pos]{overflow:visible}[aria-label][data-balloon-pos]{position:relative;cursor:pointer}[aria-label][data-balloon-pos]:after{text-indent:0;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif;font-weight:400;font-style:normal;text-shadow:none;font-size:var(--balloon-font-size);background:var(--balloon-color);border-radius:2px;color:#fff;content:attr(aria-label);padding:.5em 1em;white-space:nowrap;line-height:1.2}[aria-label][data-balloon-pos]:after,[aria-label][data-balloon-pos]:before{opacity:0;pointer-events:none;-webkit-transition:all .18s ease-out .18s;transition:all .18s ease-out .18s;position:absolute;z-index:10}[aria-label][data-balloon-pos]:before{width:0;height:0;border:5px solid transparent;border-top:5px solid var(--balloon-color);content:\"\"}[aria-label][data-balloon-pos]:hover:after,[aria-label][data-balloon-pos]:hover:before{opacity:1;pointer-events:none}[aria-label][data-balloon-pos][data-balloon-pos=up]:after{margin-bottom:10px}[aria-label][data-balloon-pos][data-balloon-pos=up]:after,[aria-label][data-balloon-pos][data-balloon-pos=up]:before{bottom:100%;left:50%;-webkit-transform:translate(-50%,var(--balloon-move));transform:translate(-50%,var(--balloon-move));-webkit-transform-origin:top;transform-origin:top}[aria-label][data-balloon-pos][data-balloon-pos=up]:hover:after,[aria-label][data-balloon-pos][data-balloon-pos=up]:hover:before{-webkit-transform:translate(-50%);transform:translate(-50%)}\n/*# sourceMappingURL=data:application/json;base64,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QyxDQUEvQyw2Q0FBK0MsQ0FDL0MsNEJBQXFCLENBQXJCLG9CQUt1QixDQUd6QixpSUFDRSxpQ0FBNkIsQ0FBN0IseUJBQStCIiwiZmlsZSI6ImluZGV4LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuYXJ0LXVuZGVyY292ZXIge1xuICBiYWNrZ3JvdW5kOiAjMDAwO1xuICBwb3NpdGlvbjogZml4ZWQ7XG4gIHRvcDogMDtcbiAgbGVmdDogMDtcbiAgZGlzcGxheTogbm9uZTtcbiAgaGVpZ2h0OiAxMDAlO1xuICB3aWR0aDogMTAwJTtcbiAgb3BhY2l0eTogMC45O1xuICB6LWluZGV4OiAxMDsgfVxuXG4uYXJ0LXZpZGVvLXBsYXllciB7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgbWFyZ2luOiAwIGF1dG87XG4gIHotaW5kZXg6IDIwO1xuICB3aWR0aDogMTAwJTtcbiAgaGVpZ2h0OiAxMDAlO1xuICBvdXRsaW5lOiAwO1xuICB6b29tOiAxO1xuICBmb250LWZhbWlseTogUm9ib3RvLCBBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmO1xuICBjb2xvcjogI2VlZTtcbiAgdGV4dC1hbGlnbjogbGVmdDtcbiAgZGlyZWN0aW9uOiBsdHI7XG4gIGZvbnQtc2l6ZTogMTRweDtcbiAgbGluZS1oZWlnaHQ6IDEuMztcbiAgdXNlci1zZWxlY3Q6IG5vbmU7XG4gIC13ZWJraXQtdGFwLWhpZ2hsaWdodC1jb2xvcjogcmdiYSgwLCAwLCAwLCAwKTtcbiAgdG91Y2gtYWN0aW9uOiBtYW5pcHVsYXRpb247XG4gIC1tcy1oaWdoLWNvbnRyYXN0LWFkanVzdDogbm9uZTsgfVxuICAuYXJ0LXZpZGVvLXBsYXllciAqIHtcbiAgICBtYXJnaW46IDA7XG4gICAgcGFkZGluZzogMDtcbiAgICBib3gtc2l6aW5nOiBib3JkZXItYm94OyB9XG4gIC5hcnQtdmlkZW8tcGxheWVyIDo6LXdlYmtpdC1zY3JvbGxiYXIge1xuICAgIHdpZHRoOiA1cHg7IH1cbiAgLmFydC12aWRlby1wbGF5ZXIgOjotd2Via2l0LXNjcm9sbGJhci10aHVtYiB7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogIzY2NjsgfVxuICAuYXJ0LXZpZGVvLXBsYXllciA6Oi13ZWJraXQtc2Nyb2xsYmFyLXRodW1iOmhvdmVyIHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjY2NjOyB9XG4gIC5hcnQtdmlkZW8tcGxheWVyIC5hcnQtaWNvbiB7XG4gICAgZGlzcGxheTogaW5saW5lLWZsZXg7XG4gICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgICBsaW5lLWhlaWdodDogMS41OyB9XG4gICAgLmFydC12aWRlby1wbGF5ZXIgLmFydC1pY29uIHN2ZyB7XG4gICAgICBmaWxsOiAjZmZmOyB9XG4gIC5hcnQtdmlkZW8tcGxheWVyIGltZyB7XG4gICAgbWF4LXdpZHRoOiAxMDAlO1xuICAgIHZlcnRpY2FsLWFsaWduOiB0b3A7IH1cbiAgLmFydC12aWRlby1wbGF5ZXIgPiA+ID4gb2JqZWN0IHtcbiAgICBkaXNwbGF5OiBibG9jaztcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgdG9wOiAwO1xuICAgIGxlZnQ6IDA7XG4gICAgaGVpZ2h0OiAxMDAlO1xuICAgIHdpZHRoOiAxMDAlO1xuICAgIG92ZXJmbG93OiBoaWRkZW47XG4gICAgcG9pbnRlci1ldmVudHM6IG5vbmU7XG4gICAgei1pbmRleDogLTE7IH1cbiAgQHN1cHBvcnRzICgtd2Via2l0LWJhY2tkcm9wLWZpbHRlcjogaW5pdGlhbCkgb3IgKGJhY2tkcm9wLWZpbHRlcjogaW5pdGlhbCkge1xuICAgIC5hcnQtdmlkZW8tcGxheWVyIC5hcnQtYmFja2Ryb3AtZmlsdGVyIHtcbiAgICAgIC13ZWJraXQtYmFja2Ryb3AtZmlsdGVyOiBzYXR1cmF0ZSgxODAlKSBibHVyKDIwcHgpO1xuICAgICAgYmFja2Ryb3AtZmlsdGVyOiBzYXR1cmF0ZSgxODAlKSBibHVyKDIwcHgpO1xuICAgICAgYmFja2dyb3VuZC1jb2xvcjogcmdiYSgwLCAwLCAwLCAwLjcpICFpbXBvcnRhbnQ7IH0gfVxuXG4uYXJ0LXZpZGVvLXBsYXllciAuYXJ0LXZpZGVvIHtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICB6LWluZGV4OiAxMDtcbiAgbGVmdDogMDtcbiAgdG9wOiAwO1xuICByaWdodDogMDtcbiAgYm90dG9tOiAwO1xuICB3aWR0aDogMTAwJTtcbiAgaGVpZ2h0OiAxMDAlO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjMDAwO1xuICBjdXJzb3I6IHBvaW50ZXI7IH1cblxuLmFydC12aWRlby1wbGF5ZXIgLmFydC1zdWJ0aXRsZSB7XG4gIGRpc3BsYXk6IG5vbmU7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgei1pbmRleDogMjA7XG4gIGJvdHRvbTogMTBweDtcbiAgd2lkdGg6IDEwMCU7XG4gIHBhZGRpbmc6IDAgMjBweDtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xuICBjb2xvcjogI2ZmZjtcbiAgZm9udC1zaXplOiAyMHB4O1xuICBwb2ludGVyLWV2ZW50czogbm9uZTtcbiAgdGV4dC1zaGFkb3c6IDAuNXB4IDAuNXB4IDAuNXB4IHJnYmEoMCwgMCwgMCwgMC41KTsgfVxuICAuYXJ0LXZpZGVvLXBsYXllciAuYXJ0LXN1YnRpdGxlIHAge1xuICAgIHdvcmQtYnJlYWs6IGJyZWFrLWFsbDtcbiAgICBoZWlnaHQ6IGZpdC1jb250ZW50O1xuICAgIG1hcmdpbjogNXB4IDA7IH1cblxuLmFydC12aWRlby1wbGF5ZXIuYXJ0LXN1YnRpdGxlLXNob3cgLmFydC1zdWJ0aXRsZSB7XG4gIGRpc3BsYXk6IGJsb2NrOyB9XG5cbi5hcnQtdmlkZW8tcGxheWVyLmFydC1jb250cm9sLXNob3cgLmFydC1zdWJ0aXRsZSB7XG4gIGJvdHRvbTogNDBweDsgfVxuXG4uYXJ0LXZpZGVvLXBsYXllciAuYXJ0LWRhbm11a3Uge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIHotaW5kZXg6IDMwO1xuICBsZWZ0OiAwO1xuICB0b3A6IDA7XG4gIHJpZ2h0OiAwO1xuICBib3R0b206IDA7XG4gIHdpZHRoOiAxMDAlO1xuICBoZWlnaHQ6IDEwMCU7XG4gIG92ZXJmbG93OiBoaWRkZW47XG4gIHBvaW50ZXItZXZlbnRzOiBub25lOyB9XG5cbi5hcnQtdmlkZW8tcGxheWVyIC5hcnQtbGF5ZXJzIHtcbiAgZGlzcGxheTogbm9uZTtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICB6LWluZGV4OiA0MDtcbiAgbGVmdDogMDtcbiAgdG9wOiAwO1xuICByaWdodDogMDtcbiAgYm90dG9tOiAwO1xuICB3aWR0aDogMTAwJTtcbiAgaGVpZ2h0OiAxMDAlO1xuICBvdmVyZmxvdzogaGlkZGVuO1xuICBwb2ludGVyLWV2ZW50czogbm9uZTsgfVxuICAuYXJ0LXZpZGVvLXBsYXllciAuYXJ0LWxheWVycyAuYXJ0LWxheWVyIHtcbiAgICBwb2ludGVyLWV2ZW50czogYXV0bzsgfVxuXG4uYXJ0LXZpZGVvLXBsYXllci5hcnQtbGF5ZXItc2hvdyAuYXJ0LWxheWVycyB7XG4gIGRpc3BsYXk6IGJsb2NrOyB9XG5cbi5hcnQtdmlkZW8tcGxheWVyIC5hcnQtbWFzayB7XG4gIGRpc3BsYXk6IG5vbmU7XG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIHotaW5kZXg6IDUwO1xuICBsZWZ0OiAwO1xuICB0b3A6IDA7XG4gIHJpZ2h0OiAwO1xuICBib3R0b206IDA7XG4gIHdpZHRoOiAxMDAlO1xuICBoZWlnaHQ6IDEwMCU7XG4gIG92ZXJmbG93OiBoaWRkZW47XG4gIHBvaW50ZXItZXZlbnRzOiBub25lOyB9XG4gIC5hcnQtdmlkZW8tcGxheWVyIC5hcnQtbWFzayAuYXJ0LXN0YXRlIHtcbiAgICBkaXNwbGF5OiBmbGV4O1xuICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgIHJpZ2h0OiAzMHB4O1xuICAgIGJvdHRvbTogNTVweDtcbiAgICB3aWR0aDogNjBweDtcbiAgICBoZWlnaHQ6IDYwcHg7XG4gICAgb3BhY2l0eTogMC42OyB9XG5cbi5hcnQtdmlkZW8tcGxheWVyLmFydC1tYXNrLXNob3cgLmFydC1tYXNrIHtcbiAgZGlzcGxheTogZmxleDsgfVxuXG4uYXJ0LXZpZGVvLXBsYXllciAuYXJ0LWxvYWRpbmcge1xuICBkaXNwbGF5OiBub25lO1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIHotaW5kZXg6IDcwO1xuICBsZWZ0OiAwO1xuICB0b3A6IDA7XG4gIHJpZ2h0OiAwO1xuICBib3R0b206IDA7XG4gIHdpZHRoOiAxMDAlO1xuICBoZWlnaHQ6IDEwMCU7XG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xuICBwb2ludGVyLWV2ZW50czogbm9uZTsgfVxuXG4uYXJ0LXZpZGVvLXBsYXllci5hcnQtbG9hZGluZy1zaG93IC5hcnQtbG9hZGluZyB7XG4gIGRpc3BsYXk6IGZsZXg7IH1cblxuLmFydC12aWRlby1wbGF5ZXIgLmFydC1ib3R0b20ge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIHotaW5kZXg6IDYwO1xuICBsZWZ0OiAwO1xuICByaWdodDogMDtcbiAgYm90dG9tOiAwO1xuICBoZWlnaHQ6IDEwMHB4O1xuICBwYWRkaW5nOiA1NXB4IDEwcHggMDtcbiAgb3BhY2l0eTogMDtcbiAgdmlzaWJpbGl0eTogaGlkZGVuO1xuICB0cmFuc2l0aW9uOiBhbGwgMC4ycyBlYXNlLWluLW91dDtcbiAgcG9pbnRlci1ldmVudHM6IG5vbmU7XG4gIGJhY2tncm91bmQ6IHVybChkYXRhOmltYWdlL3BuZztiYXNlNjQsaVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQUFFQUFBREdDQVlBQUFBVCtPcUZBQUFBZGtsRVFWUW96NDJRUVE3QUlBZ0VGL1QvRCtrYnEvUldBbG5ReXlhekE0YW9BQjRGc0JTQS9iRmp1RjFFT0w3VmJySXJCdXVzbXJ0NFpaT1JmYjZlaGJXZG5SSEVJaUlUYUVVS2E1RUpxVWFrUlNhRVlCSlNDWTJkRXN0UVk3QXV4YWh3WEZydlptV2wycmg0SlowN3o5ZEx0ZXNmTmo1cTBGVTNBNU9iYndBQUFBQkpSVTVFcmtKZ2dnPT0pIHJlcGVhdC14IGJvdHRvbTsgfVxuICAuYXJ0LXZpZGVvLXBsYXllciAuYXJ0LWJvdHRvbSAuYXJ0LXByb2dyZXNzIHtcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgcG9pbnRlci1ldmVudHM6IGF1dG87IH1cbiAgICAuYXJ0LXZpZGVvLXBsYXllciAuYXJ0LWJvdHRvbSAuYXJ0LXByb2dyZXNzIC5hcnQtY29udHJvbC1wcm9ncmVzcyB7XG4gICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgZmxleC1kaXJlY3Rpb246IHJvdztcbiAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gICAgICBoZWlnaHQ6IDRweDtcbiAgICAgIGN1cnNvcjogcG9pbnRlcjsgfVxuICAgICAgLmFydC12aWRlby1wbGF5ZXIgLmFydC1ib3R0b20gLmFydC1wcm9ncmVzcyAuYXJ0LWNvbnRyb2wtcHJvZ3Jlc3MgLmFydC1jb250cm9sLXByb2dyZXNzLWlubmVyIHtcbiAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xuICAgICAgICBoZWlnaHQ6IDUwJTtcbiAgICAgICAgd2lkdGg6IDEwMCU7XG4gICAgICAgIGJhY2tncm91bmQ6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4yKTsgfVxuICAgICAgICAuYXJ0LXZpZGVvLXBsYXllciAuYXJ0LWJvdHRvbSAuYXJ0LXByb2dyZXNzIC5hcnQtY29udHJvbC1wcm9ncmVzcyAuYXJ0LWNvbnRyb2wtcHJvZ3Jlc3MtaW5uZXIgLmFydC1wcm9ncmVzcy1sb2FkZWQge1xuICAgICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICAgICAgICB6LWluZGV4OiAxMDtcbiAgICAgICAgICBsZWZ0OiAwO1xuICAgICAgICAgIHRvcDogMDtcbiAgICAgICAgICByaWdodDogMDtcbiAgICAgICAgICBib3R0b206IDA7XG4gICAgICAgICAgaGVpZ2h0OiAxMDAlO1xuICAgICAgICAgIHdpZHRoOiAwO1xuICAgICAgICAgIGJhY2tncm91bmQ6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC40KTsgfVxuICAgICAgICAuYXJ0LXZpZGVvLXBsYXllciAuYXJ0LWJvdHRvbSAuYXJ0LXByb2dyZXNzIC5hcnQtY29udHJvbC1wcm9ncmVzcyAuYXJ0LWNvbnRyb2wtcHJvZ3Jlc3MtaW5uZXIgLmFydC1wcm9ncmVzcy1wbGF5ZWQge1xuICAgICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICAgICAgICB6LWluZGV4OiAyMDtcbiAgICAgICAgICBsZWZ0OiAwO1xuICAgICAgICAgIHRvcDogMDtcbiAgICAgICAgICByaWdodDogMDtcbiAgICAgICAgICBib3R0b206IDA7XG4gICAgICAgICAgaGVpZ2h0OiAxMDAlO1xuICAgICAgICAgIHdpZHRoOiAwOyB9XG4gICAgICAgIC5hcnQtdmlkZW8tcGxheWVyIC5hcnQtYm90dG9tIC5hcnQtcHJvZ3Jlc3MgLmFydC1jb250cm9sLXByb2dyZXNzIC5hcnQtY29udHJvbC1wcm9ncmVzcy1pbm5lciAuYXJ0LXByb2dyZXNzLWhpZ2hsaWdodCB7XG4gICAgICAgICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgICAgICAgIHotaW5kZXg6IDMwO1xuICAgICAgICAgIGxlZnQ6IDA7XG4gICAgICAgICAgdG9wOiAwO1xuICAgICAgICAgIHJpZ2h0OiAwO1xuICAgICAgICAgIGJvdHRvbTogMDtcbiAgICAgICAgICBoZWlnaHQ6IDEwMCU7XG4gICAgICAgICAgcG9pbnRlci1ldmVudHM6IG5vbmU7IH1cbiAgICAgICAgICAuYXJ0LXZpZGVvLXBsYXllciAuYXJ0LWJvdHRvbSAuYXJ0LXByb2dyZXNzIC5hcnQtY29udHJvbC1wcm9ncmVzcyAuYXJ0LWNvbnRyb2wtcHJvZ3Jlc3MtaW5uZXIgLmFydC1wcm9ncmVzcy1oaWdobGlnaHQgc3BhbiB7XG4gICAgICAgICAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gICAgICAgICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICAgICAgICBsZWZ0OiAwO1xuICAgICAgICAgICAgdG9wOiAwO1xuICAgICAgICAgICAgd2lkdGg6IDdweDtcbiAgICAgICAgICAgIGhlaWdodDogMTAwJTtcbiAgICAgICAgICAgIGJhY2tncm91bmQ6ICNmZmY7XG4gICAgICAgICAgICBwb2ludGVyLWV2ZW50czogYXV0bzsgfVxuICAgICAgICAuYXJ0LXZpZGVvLXBsYXllciAuYXJ0LWJvdHRvbSAuYXJ0LXByb2dyZXNzIC5hcnQtY29udHJvbC1wcm9ncmVzcyAuYXJ0LWNvbnRyb2wtcHJvZ3Jlc3MtaW5uZXIgLmFydC1wcm9ncmVzcy1pbmRpY2F0b3Ige1xuICAgICAgICAgIGRpc3BsYXk6IG5vbmU7XG4gICAgICAgICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgICAgICAgIHotaW5kZXg6IDQwO1xuICAgICAgICAgIHRvcDogLTVweDtcbiAgICAgICAgICBsZWZ0OiAtNi41cHg7XG4gICAgICAgICAgd2lkdGg6IDEzcHg7XG4gICAgICAgICAgaGVpZ2h0OiAxM3B4O1xuICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDUwJTsgfVxuICAgICAgICAgIC5hcnQtdmlkZW8tcGxheWVyIC5hcnQtYm90dG9tIC5hcnQtcHJvZ3Jlc3MgLmFydC1jb250cm9sLXByb2dyZXNzIC5hcnQtY29udHJvbC1wcm9ncmVzcy1pbm5lciAuYXJ0LXByb2dyZXNzLWluZGljYXRvci5hcnQtc2hvdy1pbmRpY2F0b3Ige1xuICAgICAgICAgICAgZGlzcGxheTogYmxvY2s7IH1cbiAgICAgICAgLmFydC12aWRlby1wbGF5ZXIgLmFydC1ib3R0b20gLmFydC1wcm9ncmVzcyAuYXJ0LWNvbnRyb2wtcHJvZ3Jlc3MgLmFydC1jb250cm9sLXByb2dyZXNzLWlubmVyIC5hcnQtcHJvZ3Jlc3MtdGlwIHtcbiAgICAgICAgICBkaXNwbGF5OiBub25lO1xuICAgICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICAgICAgICB6LWluZGV4OiA1MDtcbiAgICAgICAgICB0b3A6IC0yNXB4O1xuICAgICAgICAgIGxlZnQ6IDA7XG4gICAgICAgICAgaGVpZ2h0OiAyMHB4O1xuICAgICAgICAgIHBhZGRpbmc6IDAgNXB4O1xuICAgICAgICAgIGxpbmUtaGVpZ2h0OiAyMHB4O1xuICAgICAgICAgIGNvbG9yOiAjZmZmO1xuICAgICAgICAgIGZvbnQtc2l6ZTogMTJweDtcbiAgICAgICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgICAgICAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjcpO1xuICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDNweDtcbiAgICAgICAgICBmb250LXdlaWdodDogYm9sZDtcbiAgICAgICAgICB3aGl0ZS1zcGFjZTogbm93cmFwOyB9XG4gICAgICAuYXJ0LXZpZGVvLXBsYXllciAuYXJ0LWJvdHRvbSAuYXJ0LXByb2dyZXNzIC5hcnQtY29udHJvbC1wcm9ncmVzczpob3ZlciAuYXJ0LWNvbnRyb2wtcHJvZ3Jlc3MtaW5uZXIge1xuICAgICAgICBoZWlnaHQ6IDEwMCU7IH1cbiAgICAgICAgLmFydC12aWRlby1wbGF5ZXIgLmFydC1ib3R0b20gLmFydC1wcm9ncmVzcyAuYXJ0LWNvbnRyb2wtcHJvZ3Jlc3M6aG92ZXIgLmFydC1jb250cm9sLXByb2dyZXNzLWlubmVyIC5hcnQtcHJvZ3Jlc3MtaW5kaWNhdG9yLFxuICAgICAgICAuYXJ0LXZpZGVvLXBsYXllciAuYXJ0LWJvdHRvbSAuYXJ0LXByb2dyZXNzIC5hcnQtY29udHJvbC1wcm9ncmVzczpob3ZlciAuYXJ0LWNvbnRyb2wtcHJvZ3Jlc3MtaW5uZXIgLmFydC1wcm9ncmVzcy10aXAge1xuICAgICAgICAgIGRpc3BsYXk6IGJsb2NrOyB9XG4gICAgLmFydC12aWRlby1wbGF5ZXIgLmFydC1ib3R0b20gLmFydC1wcm9ncmVzcyAuYXJ0LWNvbnRyb2wtdGh1bWJuYWlscyB7XG4gICAgICBkaXNwbGF5OiBub25lO1xuICAgICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgICAgYm90dG9tOiA4cHg7XG4gICAgICBsZWZ0OiAwO1xuICAgICAgcG9pbnRlci1ldmVudHM6IG5vbmU7XG4gICAgICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDAsIDAsIDAsIDAuNyk7IH1cbiAgICAuYXJ0LXZpZGVvLXBsYXllciAuYXJ0LWJvdHRvbSAuYXJ0LXByb2dyZXNzIC5hcnQtY29udHJvbC1sb29wIHtcbiAgICAgIGRpc3BsYXk6IG5vbmU7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICB3aWR0aDogMTAwJTtcbiAgICAgIGhlaWdodDogMTAwJTtcbiAgICAgIGxlZnQ6IDA7XG4gICAgICB0b3A6IDA7XG4gICAgICByaWdodDogMDtcbiAgICAgIGJvdHRvbTogMDtcbiAgICAgIHBvaW50ZXItZXZlbnRzOiBub25lOyB9XG4gICAgICAuYXJ0LXZpZGVvLXBsYXllciAuYXJ0LWJvdHRvbSAuYXJ0LXByb2dyZXNzIC5hcnQtY29udHJvbC1sb29wIC5hcnQtbG9vcC1wb2ludCB7XG4gICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICAgICAgbGVmdDogMDtcbiAgICAgICAgdG9wOiAtMnB4O1xuICAgICAgICB3aWR0aDogMnB4O1xuICAgICAgICBoZWlnaHQ6IDhweDtcbiAgICAgICAgYmFja2dyb3VuZDogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjc1KTsgfVxuICAuYXJ0LXZpZGVvLXBsYXllciAuYXJ0LWJvdHRvbSAuYXJ0LWNvbnRyb2xzIHtcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgcG9pbnRlci1ldmVudHM6IGF1dG87XG4gICAgZGlzcGxheTogZmxleDtcbiAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgIGp1c3RpZnktY29udGVudDogc3BhY2UtYmV0d2VlbjtcbiAgICBoZWlnaHQ6IDQwcHg7XG4gICAgcGFkZGluZzogNXB4IDA7IH1cbiAgICAuYXJ0LXZpZGVvLXBsYXllciAuYXJ0LWJvdHRvbSAuYXJ0LWNvbnRyb2xzIC5hcnQtY29udHJvbHMtbGVmdCxcbiAgICAuYXJ0LXZpZGVvLXBsYXllciAuYXJ0LWJvdHRvbSAuYXJ0LWNvbnRyb2xzIC5hcnQtY29udHJvbHMtcmlnaHQge1xuICAgICAgZGlzcGxheTogZmxleDsgfVxuICAgIC5hcnQtdmlkZW8tcGxheWVyIC5hcnQtYm90dG9tIC5hcnQtY29udHJvbHMgLmFydC1jb250cm9sIHtcbiAgICAgIG9wYWNpdHk6IDAuOTtcbiAgICAgIGZvbnQtc2l6ZTogMTJweDtcbiAgICAgIGhlaWdodDogMzZweDtcbiAgICAgIG1pbi13aWR0aDogMzZweDtcbiAgICAgIGxpbmUtaGVpZ2h0OiAzNnB4O1xuICAgICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgICAgY3Vyc29yOiBwb2ludGVyOyB9XG4gICAgICAuYXJ0LXZpZGVvLXBsYXllciAuYXJ0LWJvdHRvbSAuYXJ0LWNvbnRyb2xzIC5hcnQtY29udHJvbCAuYXJ0LWljb24ge1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICAgICAgZmxvYXQ6IGxlZnQ7XG4gICAgICAgIGhlaWdodDogMzZweDtcbiAgICAgICAgd2lkdGg6IDM2cHg7IH1cbiAgICAgIC5hcnQtdmlkZW8tcGxheWVyIC5hcnQtYm90dG9tIC5hcnQtY29udHJvbHMgLmFydC1jb250cm9sOmhvdmVyIHtcbiAgICAgICAgb3BhY2l0eTogMTsgfVxuICAgIC5hcnQtdmlkZW8tcGxheWVyIC5hcnQtYm90dG9tIC5hcnQtY29udHJvbHMgLmFydC1jb250cm9sLW9ubHlUZXh0IHtcbiAgICAgIHBhZGRpbmc6IDAgMTBweDsgfVxuICAgIC5hcnQtdmlkZW8tcGxheWVyIC5hcnQtYm90dG9tIC5hcnQtY29udHJvbHMgLmFydC1jb250cm9sLXZvbHVtZSAuYXJ0LXZvbHVtZS1wYW5lbCB7XG4gICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgICBmbG9hdDogbGVmdDtcbiAgICAgIHdpZHRoOiAwO1xuICAgICAgaGVpZ2h0OiAxMDAlO1xuICAgICAgdHJhbnNpdGlvbjogbWFyZ2luIDAuMnMgY3ViaWMtYmV6aWVyKDAuNCwgMCwgMSwgMSksIHdpZHRoIDAuMnMgY3ViaWMtYmV6aWVyKDAuNCwgMCwgMSwgMSk7XG4gICAgICBvdmVyZmxvdzogaGlkZGVuOyB9XG4gICAgICAuYXJ0LXZpZGVvLXBsYXllciAuYXJ0LWJvdHRvbSAuYXJ0LWNvbnRyb2xzIC5hcnQtY29udHJvbC12b2x1bWUgLmFydC12b2x1bWUtcGFuZWwgLmFydC12b2x1bWUtc2xpZGVyLWhhbmRsZSB7XG4gICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICAgICAgdG9wOiA1MCU7XG4gICAgICAgIGxlZnQ6IDA7XG4gICAgICAgIHdpZHRoOiAxMnB4O1xuICAgICAgICBoZWlnaHQ6IDEycHg7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDEycHg7XG4gICAgICAgIG1hcmdpbi10b3A6IC02cHg7XG4gICAgICAgIGJhY2tncm91bmQ6ICNmZmY7IH1cbiAgICAgICAgLmFydC12aWRlby1wbGF5ZXIgLmFydC1ib3R0b20gLmFydC1jb250cm9scyAuYXJ0LWNvbnRyb2wtdm9sdW1lIC5hcnQtdm9sdW1lLXBhbmVsIC5hcnQtdm9sdW1lLXNsaWRlci1oYW5kbGU6OmJlZm9yZSB7XG4gICAgICAgICAgbGVmdDogLTU0cHg7XG4gICAgICAgICAgYmFja2dyb3VuZDogI2ZmZjsgfVxuICAgICAgICAuYXJ0LXZpZGVvLXBsYXllciAuYXJ0LWJvdHRvbSAuYXJ0LWNvbnRyb2xzIC5hcnQtY29udHJvbC12b2x1bWUgLmFydC12b2x1bWUtcGFuZWwgLmFydC12b2x1bWUtc2xpZGVyLWhhbmRsZTo6YWZ0ZXIge1xuICAgICAgICAgIGxlZnQ6IDZweDtcbiAgICAgICAgICBiYWNrZ3JvdW5kOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMik7IH1cbiAgICAgICAgLmFydC12aWRlby1wbGF5ZXIgLmFydC1ib3R0b20gLmFydC1jb250cm9scyAuYXJ0LWNvbnRyb2wtdm9sdW1lIC5hcnQtdm9sdW1lLXBhbmVsIC5hcnQtdm9sdW1lLXNsaWRlci1oYW5kbGU6OmJlZm9yZSwgLmFydC12aWRlby1wbGF5ZXIgLmFydC1ib3R0b20gLmFydC1jb250cm9scyAuYXJ0LWNvbnRyb2wtdm9sdW1lIC5hcnQtdm9sdW1lLXBhbmVsIC5hcnQtdm9sdW1lLXNsaWRlci1oYW5kbGU6OmFmdGVyIHtcbiAgICAgICAgICBjb250ZW50OiAnJztcbiAgICAgICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICAgICAgZGlzcGxheTogYmxvY2s7XG4gICAgICAgICAgdG9wOiA1MCU7XG4gICAgICAgICAgaGVpZ2h0OiAzcHg7XG4gICAgICAgICAgbWFyZ2luLXRvcDogLTJweDtcbiAgICAgICAgICB3aWR0aDogNjBweDsgfVxuICAgIC5hcnQtdmlkZW8tcGxheWVyIC5hcnQtYm90dG9tIC5hcnQtY29udHJvbHMgLmFydC1jb250cm9sLXZvbHVtZTpob3ZlciAuYXJ0LXZvbHVtZS1wYW5lbCB7XG4gICAgICB3aWR0aDogNjBweDsgfVxuICAgIC5hcnQtdmlkZW8tcGxheWVyIC5hcnQtYm90dG9tIC5hcnQtY29udHJvbHMgLmFydC1jb250cm9sLXF1YWxpdHkge1xuICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xuICAgICAgei1pbmRleDogMzA7IH1cbiAgICAgIC5hcnQtdmlkZW8tcGxheWVyIC5hcnQtYm90dG9tIC5hcnQtY29udHJvbHMgLmFydC1jb250cm9sLXF1YWxpdHkgLmFydC1xdWFsaXR5cyB7XG4gICAgICAgIGRpc3BsYXk6IG5vbmU7XG4gICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICAgICAgYm90dG9tOiAzNXB4O1xuICAgICAgICB3aWR0aDogMTAwcHg7XG4gICAgICAgIHBhZGRpbmc6IDVweCAwO1xuICAgICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgICAgIGNvbG9yOiAjZmZmO1xuICAgICAgICBiYWNrZ3JvdW5kOiByZ2JhKDAsIDAsIDAsIDAuOCk7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDNweDsgfVxuICAgICAgICAuYXJ0LXZpZGVvLXBsYXllciAuYXJ0LWJvdHRvbSAuYXJ0LWNvbnRyb2xzIC5hcnQtY29udHJvbC1xdWFsaXR5IC5hcnQtcXVhbGl0eXMgLmFydC1xdWFsaXR5LWl0ZW0ge1xuICAgICAgICAgIGhlaWdodDogMzBweDtcbiAgICAgICAgICBsaW5lLWhlaWdodDogMzBweDtcbiAgICAgICAgICBvdmVyZmxvdzogaGlkZGVuO1xuICAgICAgICAgIHRleHQtb3ZlcmZsb3c6IGVsbGlwc2lzO1xuICAgICAgICAgIHdoaXRlLXNwYWNlOiBub3dyYXA7XG4gICAgICAgICAgdGV4dC1zaGFkb3c6IDAgMCAycHggcmdiYSgwLCAwLCAwLCAwLjUpOyB9XG4gICAgICAgICAgLmFydC12aWRlby1wbGF5ZXIgLmFydC1ib3R0b20gLmFydC1jb250cm9scyAuYXJ0LWNvbnRyb2wtcXVhbGl0eSAuYXJ0LXF1YWxpdHlzIC5hcnQtcXVhbGl0eS1pdGVtOmhvdmVyIHtcbiAgICAgICAgICAgIGJhY2tncm91bmQtY29sb3I6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4xKTsgfVxuICAgICAgLmFydC12aWRlby1wbGF5ZXIgLmFydC1ib3R0b20gLmFydC1jb250cm9scyAuYXJ0LWNvbnRyb2wtcXVhbGl0eTpob3ZlciAuYXJ0LXF1YWxpdHlzIHtcbiAgICAgICAgZGlzcGxheTogYmxvY2s7IH1cblxuLmFydC12aWRlby1wbGF5ZXIuYXJ0LWNvbnRyb2wtc2hvdyAuYXJ0LWJvdHRvbSwgLmFydC12aWRlby1wbGF5ZXIuYXJ0LWhvdmVyIC5hcnQtYm90dG9tIHtcbiAgb3BhY2l0eTogMTtcbiAgdmlzaWJpbGl0eTogdmlzaWJsZTsgfVxuXG4uYXJ0LXZpZGVvLXBsYXllci5hcnQtZXJyb3IgLmFydC1wcm9ncmVzcy1pbmRpY2F0b3IsXG4uYXJ0LXZpZGVvLXBsYXllci5hcnQtZXJyb3IgLmFydC1wcm9ncmVzcy10aXAsIC5hcnQtdmlkZW8tcGxheWVyLmFydC1kZXN0cm95IC5hcnQtcHJvZ3Jlc3MtaW5kaWNhdG9yLFxuLmFydC12aWRlby1wbGF5ZXIuYXJ0LWRlc3Ryb3kgLmFydC1wcm9ncmVzcy10aXAge1xuICBkaXNwbGF5OiBub25lICFpbXBvcnRhbnQ7IH1cblxuLmFydC12aWRlby1wbGF5ZXIgLmFydC1ub3RpY2Uge1xuICBkaXNwbGF5OiBub25lO1xuICBmb250LXNpemU6IDE0cHg7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgei1pbmRleDogODA7XG4gIGxlZnQ6IDA7XG4gIHRvcDogMDtcbiAgcGFkZGluZzogMTBweDtcbiAgd2lkdGg6IDEwMCU7XG4gIHBvaW50ZXItZXZlbnRzOiBub25lOyB9XG4gIC5hcnQtdmlkZW8tcGxheWVyIC5hcnQtbm90aWNlIC5hcnQtbm90aWNlLWlubmVyIHtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gICAgcGFkZGluZzogNXB4IDEwcHg7XG4gICAgY29sb3I6ICNmZmY7XG4gICAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjYpO1xuICAgIGJvcmRlci1yYWRpdXM6IDNweDsgfVxuXG4uYXJ0LXZpZGVvLXBsYXllci5hcnQtbm90aWNlLXNob3cgLmFydC1ub3RpY2Uge1xuICBkaXNwbGF5OiBmbGV4OyB9XG5cbi5hcnQtdmlkZW8tcGxheWVyIC5hcnQtY29udGV4dG1lbnVzIHtcbiAgZGlzcGxheTogbm9uZTtcbiAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICB6LWluZGV4OiAxMjA7XG4gIGxlZnQ6IDA7XG4gIHRvcDogMDtcbiAgbWluLXdpZHRoOiAyMDBweDtcbiAgcGFkZGluZzogNXB4IDA7XG4gIGJhY2tncm91bmQ6IHJnYmEoMCwgMCwgMCwgMC45KTtcbiAgYm9yZGVyLXJhZGl1czogM3B4OyB9XG4gIC5hcnQtdmlkZW8tcGxheWVyIC5hcnQtY29udGV4dG1lbnVzIC5hcnQtY29udGV4dG1lbnUge1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICBmb250LXNpemU6IDEycHg7XG4gICAgZGlzcGxheTogYmxvY2s7XG4gICAgY29sb3I6ICNmZmY7XG4gICAgcGFkZGluZzogMTBweCAxNXB4O1xuICAgIG92ZXJmbG93OiBoaWRkZW47XG4gICAgdGV4dC1vdmVyZmxvdzogZWxsaXBzaXM7XG4gICAgd2hpdGUtc3BhY2U6IG5vd3JhcDtcbiAgICB0ZXh0LXNoYWRvdzogMCAwIDJweCByZ2JhKDAsIDAsIDAsIDAuNSk7XG4gICAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkIHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4xKTsgfVxuICAgIC5hcnQtdmlkZW8tcGxheWVyIC5hcnQtY29udGV4dG1lbnVzIC5hcnQtY29udGV4dG1lbnUgYSB7XG4gICAgICBjb2xvcjogI2ZmZjtcbiAgICAgIHRleHQtZGVjb3JhdGlvbjogbm9uZTsgfVxuICAgIC5hcnQtdmlkZW8tcGxheWVyIC5hcnQtY29udGV4dG1lbnVzIC5hcnQtY29udGV4dG1lbnUgc3BhbiB7XG4gICAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gICAgICBwYWRkaW5nOiAwIDdweDsgfVxuICAgICAgLmFydC12aWRlby1wbGF5ZXIgLmFydC1jb250ZXh0bWVudXMgLmFydC1jb250ZXh0bWVudSBzcGFuOmhvdmVyLCAuYXJ0LXZpZGVvLXBsYXllciAuYXJ0LWNvbnRleHRtZW51cyAuYXJ0LWNvbnRleHRtZW51IHNwYW4uYXJ0LWN1cnJlbnQge1xuICAgICAgICBjb2xvcjogIzAwYzlmZjsgfVxuICAgIC5hcnQtdmlkZW8tcGxheWVyIC5hcnQtY29udGV4dG1lbnVzIC5hcnQtY29udGV4dG1lbnU6aG92ZXIge1xuICAgICAgYmFja2dyb3VuZC1jb2xvcjogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjEpOyB9XG4gICAgLmFydC12aWRlby1wbGF5ZXIgLmFydC1jb250ZXh0bWVudXMgLmFydC1jb250ZXh0bWVudTpsYXN0LWNoaWxkIHtcbiAgICAgIGJvcmRlci1ib3R0b206IG5vbmU7IH1cblxuLmFydC12aWRlby1wbGF5ZXIuYXJ0LWNvbnRleHRtZW51LXNob3cgLmFydC1jb250ZXh0bWVudXMge1xuICBkaXNwbGF5OiBmbGV4OyB9XG5cbi5hcnQtdmlkZW8tcGxheWVyIC5hcnQtc2V0dGluZ3Mge1xuICBkaXNwbGF5OiBmbGV4O1xuICBhbGlnbi1pdGVtczogY2VudGVyO1xuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICB6LWluZGV4OiA5MDtcbiAgbGVmdDogMDtcbiAgdG9wOiAwO1xuICBoZWlnaHQ6IDEwMCU7XG4gIHdpZHRoOiAxMDAlO1xuICBvcGFjaXR5OiAwO1xuICB2aXNpYmlsaXR5OiBoaWRkZW47XG4gIHBvaW50ZXItZXZlbnRzOiBub25lO1xuICBvdmVyZmxvdzogaGlkZGVuOyB9XG4gIC5hcnQtdmlkZW8tcGxheWVyIC5hcnQtc2V0dGluZ3MgLmFydC1zZXR0aW5nLWlubmVyIHtcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgdG9wOiAwO1xuICAgIHJpZ2h0OiAtMzAwcHg7XG4gICAgYm90dG9tOiAwO1xuICAgIHdpZHRoOiAzMDBweDtcbiAgICBoZWlnaHQ6IDEwMCU7XG4gICAgZm9udC1zaXplOiAxMnB4O1xuICAgIGJhY2tncm91bmQ6IHJnYmEoMCwgMCwgMCwgMC45KTtcbiAgICB0cmFuc2l0aW9uOiBhbGwgMC4ycyBlYXNlLWluLW91dDtcbiAgICBvdmVyZmxvdzogYXV0bzsgfVxuICAgIC5hcnQtdmlkZW8tcGxheWVyIC5hcnQtc2V0dGluZ3MgLmFydC1zZXR0aW5nLWlubmVyIC5hcnQtc2V0dGluZy1ib2R5IHtcbiAgICAgIG92ZXJmbG93LXk6IGF1dG87XG4gICAgICB3aWR0aDogMTAwJTtcbiAgICAgIGhlaWdodDogMTAwJTsgfVxuICAgICAgLmFydC12aWRlby1wbGF5ZXIgLmFydC1zZXR0aW5ncyAuYXJ0LXNldHRpbmctaW5uZXIgLmFydC1zZXR0aW5nLWJvZHkgLmFydC1zZXR0aW5nIHtcbiAgICAgICAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkIHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4xKTtcbiAgICAgICAgcGFkZGluZzogMTBweCAxNXB4OyB9XG4gICAgICAgIC5hcnQtdmlkZW8tcGxheWVyIC5hcnQtc2V0dGluZ3MgLmFydC1zZXR0aW5nLWlubmVyIC5hcnQtc2V0dGluZy1ib2R5IC5hcnQtc2V0dGluZyAuYXJ0LXNldHRpbmctaGVhZGVyIHtcbiAgICAgICAgICBtYXJnaW4tYm90dG9tOiA1cHg7IH1cbiAgLmFydC12aWRlby1wbGF5ZXIgLmFydC1zZXR0aW5ncyAuYXJ0LXNldHRpbmctcmFkaW8ge1xuICAgIGRpc3BsYXk6IGZsZXg7IH1cbiAgICAuYXJ0LXZpZGVvLXBsYXllciAuYXJ0LXNldHRpbmdzIC5hcnQtc2V0dGluZy1yYWRpbyAuYXJ0LXJhZGlvLWl0ZW0ge1xuICAgICAgZmxleDogMTtcbiAgICAgIHBhZGRpbmc6IDAgMnB4OyB9XG4gICAgICAuYXJ0LXZpZGVvLXBsYXllciAuYXJ0LXNldHRpbmdzIC5hcnQtc2V0dGluZy1yYWRpbyAuYXJ0LXJhZGlvLWl0ZW0gYnV0dG9uIHtcbiAgICAgICAgaGVpZ2h0OiAyMnB4O1xuICAgICAgICB3aWR0aDogMTAwJTtcbiAgICAgICAgYm9yZGVyOiBub25lO1xuICAgICAgICBvdXRsaW5lOiBub25lO1xuICAgICAgICBjb2xvcjogI2ZmZjtcbiAgICAgICAgYmFja2dyb3VuZDogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjIpO1xuICAgICAgICBib3JkZXItcmFkaXVzOiAycHg7IH1cbiAgICAgIC5hcnQtdmlkZW8tcGxheWVyIC5hcnQtc2V0dGluZ3MgLmFydC1zZXR0aW5nLXJhZGlvIC5hcnQtcmFkaW8taXRlbS5jdXJyZW50IGJ1dHRvbiB7XG4gICAgICAgIGJhY2tncm91bmQtY29sb3I6ICMwMGExZDY7IH1cbiAgLmFydC12aWRlby1wbGF5ZXIgLmFydC1zZXR0aW5ncyAuYXJ0LXNldHRpbmctcmFuZ2UgaW5wdXQge1xuICAgIHdpZHRoOiAxMDAlO1xuICAgIGhlaWdodDogM3B4O1xuICAgIG91dGxpbmU6IG5vbmU7XG4gICAgYXBwZWFyYW5jZTogbm9uZTtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuNSk7IH1cbiAgLmFydC12aWRlby1wbGF5ZXIgLmFydC1zZXR0aW5ncyAuYXJ0LXNldHRpbmctY2hlY2tib3ggaW5wdXQge1xuICAgIGhlaWdodDogMTRweDtcbiAgICB3aWR0aDogMTRweDtcbiAgICBtYXJnaW4tcmlnaHQ6IDVweDsgfVxuICAuYXJ0LXZpZGVvLXBsYXllciAuYXJ0LXNldHRpbmdzIC5hcnQtc2V0dGluZy11cGxvYWQge1xuICAgIGRpc3BsYXk6IGZsZXg7IH1cbiAgICAuYXJ0LXZpZGVvLXBsYXllciAuYXJ0LXNldHRpbmdzIC5hcnQtc2V0dGluZy11cGxvYWQgLmFydC11cGxvYWQtYnRuIHtcbiAgICAgIHdpZHRoOiA4MHB4O1xuICAgICAgaGVpZ2h0OiAyMnB4O1xuICAgICAgbGluZS1oZWlnaHQ6IDIycHg7XG4gICAgICBib3JkZXI6IG5vbmU7XG4gICAgICBvdXRsaW5lOiBub25lO1xuICAgICAgY29sb3I6ICNmZmY7XG4gICAgICBiYWNrZ3JvdW5kOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMik7XG4gICAgICBib3JkZXItcmFkaXVzOiAycHg7XG4gICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7IH1cbiAgICAuYXJ0LXZpZGVvLXBsYXllciAuYXJ0LXNldHRpbmdzIC5hcnQtc2V0dGluZy11cGxvYWQgLmFydC11cGxvYWQtdmFsdWUge1xuICAgICAgZmxleDogMTtcbiAgICAgIG92ZXJmbG93OiBoaWRkZW47XG4gICAgICB0ZXh0LW92ZXJmbG93OiBlbGxpcHNpcztcbiAgICAgIHdoaXRlLXNwYWNlOiBub3dyYXA7XG4gICAgICBoZWlnaHQ6IDIycHg7XG4gICAgICBsaW5lLWhlaWdodDogMjJweDtcbiAgICAgIHBhZGRpbmctbGVmdDogMTBweDsgfVxuXG4uYXJ0LXZpZGVvLXBsYXllci5hcnQtc2V0dGluZy1zaG93IC5hcnQtc2V0dGluZ3Mge1xuICBvcGFjaXR5OiAxO1xuICB2aXNpYmlsaXR5OiB2aXNpYmxlO1xuICBwb2ludGVyLWV2ZW50czogYXV0bzsgfVxuICAuYXJ0LXZpZGVvLXBsYXllci5hcnQtc2V0dGluZy1zaG93IC5hcnQtc2V0dGluZ3MgLmFydC1zZXR0aW5nLWlubmVyIHtcbiAgICByaWdodDogMDsgfVxuXG4uYXJ0LXZpZGVvLXBsYXllciAuYXJ0LWluZm8ge1xuICBkaXNwbGF5OiBub25lO1xuICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIGxlZnQ6IDEwcHg7XG4gIHRvcDogMTBweDtcbiAgei1pbmRleDogMTAwO1xuICB3aWR0aDogMzUwcHg7XG4gIG1pbi1oZWlnaHQ6IDE1MHB4O1xuICBwYWRkaW5nOiAxMHB4O1xuICBjb2xvcjogI2ZmZjtcbiAgZm9udC1zaXplOiAxMnB4O1xuICBmb250LWZhbWlseTogTm90byBTYW5zIENKSyBTQyBEZW1pTGlnaHQsIFJvYm90bywgU2Vnb2UgVUksIFRhaG9tYSwgQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZjtcbiAgLXdlYmtpdC1mb250LXNtb290aGluZzogYW50aWFsaWFzZWQ7XG4gIGJhY2tncm91bmQ6IHJnYmEoMCwgMCwgMCwgMC45KTsgfVxuICAuYXJ0LXZpZGVvLXBsYXllciAuYXJ0LWluZm8gLmFydC1pbmZvLWl0ZW0ge1xuICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgbWFyZ2luLWJvdHRvbTogNXB4OyB9XG4gICAgLmFydC12aWRlby1wbGF5ZXIgLmFydC1pbmZvIC5hcnQtaW5mby1pdGVtIC5hcnQtaW5mby10aXRsZSB7XG4gICAgICB3aWR0aDogMTAwcHg7XG4gICAgICB0ZXh0LWFsaWduOiByaWdodDsgfVxuICAgIC5hcnQtdmlkZW8tcGxheWVyIC5hcnQtaW5mbyAuYXJ0LWluZm8taXRlbSAuYXJ0LWluZm8tY29udGVudCB7XG4gICAgICBmbGV4OiAxO1xuICAgICAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgICAgIHRleHQtb3ZlcmZsb3c6IGVsbGlwc2lzO1xuICAgICAgd2hpdGUtc3BhY2U6IG5vd3JhcDtcbiAgICAgIHBhZGRpbmctbGVmdDogNXB4OyB9XG4gIC5hcnQtdmlkZW8tcGxheWVyIC5hcnQtaW5mbyAuYXJ0LWluZm8tY2xvc2Uge1xuICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICB0b3A6IDVweDtcbiAgICByaWdodDogNXB4O1xuICAgIGN1cnNvcjogcG9pbnRlcjsgfVxuXG4uYXJ0LXZpZGVvLXBsYXllci5hcnQtaW5mby1zaG93IC5hcnQtaW5mbyB7XG4gIGRpc3BsYXk6IGZsZXg7IH1cblxuLmFydC12aWRlby1wbGF5ZXIuYXJ0LWhpZGUtY3Vyc29yICoge1xuICBjdXJzb3I6IG5vbmUgIWltcG9ydGFudDsgfVxuXG4uYXJ0LXZpZGVvLXBsYXllcltkYXRhLWFzcGVjdC1yYXRpb10gdmlkZW8ge1xuICBib3gtc2l6aW5nOiBjb250ZW50LWJveDtcbiAgb2JqZWN0LWZpdDogZmlsbDsgfVxuXG4uYXJ0LXZpZGVvLXBsYXllci5hcnQtZnVsbHNjcmVlbi13ZWIge1xuICBwb3NpdGlvbjogZml4ZWQ7XG4gIHotaW5kZXg6IDk5OTk7XG4gIHdpZHRoOiAxMDAlICFpbXBvcnRhbnQ7XG4gIGhlaWdodDogMTAwJSAhaW1wb3J0YW50O1xuICBsZWZ0OiAwO1xuICB0b3A6IDA7XG4gIHJpZ2h0OiAwO1xuICBib3R0b206IDA7IH1cblxuLmFydC1mdWxsc2NyZWVuLXJvdGF0ZSB7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgei1pbmRleDogOTk5OTtcbiAgd2lkdGg6IDEwMCU7XG4gIGhlaWdodDogMTAwJTtcbiAgbGVmdDogMDtcbiAgdG9wOiAwO1xuICByaWdodDogMDtcbiAgYm90dG9tOiAwO1xuICBiYWNrZ3JvdW5kOiAjMDAwOyB9XG5cbi5hcnQtdmlkZW8tcGxheWVyIC5hcnQtbWluaS1oZWFkZXIge1xuICBkaXNwbGF5OiBub25lO1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIHotaW5kZXg6IDExMDtcbiAgbGVmdDogMDtcbiAgdG9wOiAwO1xuICByaWdodDogMDtcbiAgaGVpZ2h0OiAzNXB4O1xuICBsaW5lLWhlaWdodDogMzVweDtcbiAgY29sb3I6ICNmZmY7XG4gIGJhY2tncm91bmQ6IHJnYmEoMCwgMCwgMCwgMC41KTtcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xuICBvcGFjaXR5OiAwO1xuICB2aXNpYmlsaXR5OiBoaWRkZW47XG4gIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2UtaW4tb3V0OyB9XG4gIC5hcnQtdmlkZW8tcGxheWVyIC5hcnQtbWluaS1oZWFkZXIgLmFydC1taW5pLXRpdGxlIHtcbiAgICBmbGV4OiAxO1xuICAgIHBhZGRpbmc6IDAgMTBweDtcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuICAgIHRleHQtb3ZlcmZsb3c6IGVsbGlwc2lzO1xuICAgIHdoaXRlLXNwYWNlOiBub3dyYXA7XG4gICAgY3Vyc29yOiBtb3ZlOyB9XG4gIC5hcnQtdmlkZW8tcGxheWVyIC5hcnQtbWluaS1oZWFkZXIgLmFydC1taW5pLWNsb3NlIHtcbiAgICB3aWR0aDogMzVweDtcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgZm9udC1zaXplOiAyMnB4O1xuICAgIGN1cnNvcjogcG9pbnRlcjsgfVxuXG4uYXJ0LXZpZGVvLXBsYXllci5hcnQtaXMtZHJhZ2dpbmcge1xuICBvcGFjaXR5OiAwLjc7IH1cblxuLmFydC12aWRlby1wbGF5ZXIuYXJ0LW1pbmkge1xuICBwb3NpdGlvbjogZml4ZWQ7XG4gIHotaW5kZXg6IDk5OTk7XG4gIHdpZHRoOiA0MDBweDtcbiAgaGVpZ2h0OiAyMjVweDtcbiAgYm94LXNoYWRvdzogMCAycHggNXB4IDAgcmdiYSgwLCAwLCAwLCAwLjE2KSwgMCAzcHggNnB4IDAgcmdiYSgwLCAwLCAwLCAwLjIpOyB9XG4gIC5hcnQtdmlkZW8tcGxheWVyLmFydC1taW5pIC5hcnQtbWluaS1oZWFkZXIge1xuICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgdXNlci1zZWxlY3Q6IG5vbmU7IH1cbiAgLmFydC12aWRlby1wbGF5ZXIuYXJ0LW1pbmkuYXJ0LWhvdmVyIC5hcnQtbWluaS1oZWFkZXIge1xuICAgIG9wYWNpdHk6IDE7XG4gICAgdmlzaWJpbGl0eTogdmlzaWJsZTsgfVxuICAuYXJ0LXZpZGVvLXBsYXllci5hcnQtbWluaSAuYXJ0LW1hc2sgLmFydC1zdGF0ZSB7XG4gICAgcG9zaXRpb246IHN0YXRpYzsgfVxuICAuYXJ0LXZpZGVvLXBsYXllci5hcnQtbWluaSAuYXJ0LWNvbnRleHRtZW51LFxuICAuYXJ0LXZpZGVvLXBsYXllci5hcnQtbWluaSAuYXJ0LWJvdHRvbSxcbiAgLmFydC12aWRlby1wbGF5ZXIuYXJ0LW1pbmkgLmFydC1kYW5tdSxcbiAgLmFydC12aWRlby1wbGF5ZXIuYXJ0LW1pbmkgLmFydC1pbmZvLFxuICAuYXJ0LXZpZGVvLXBsYXllci5hcnQtbWluaSAuYXJ0LWxheWVycyxcbiAgLmFydC12aWRlby1wbGF5ZXIuYXJ0LW1pbmkgLmFydC1ub3RpY2UsXG4gIC5hcnQtdmlkZW8tcGxheWVyLmFydC1taW5pIC5hcnQtc2V0dGluZyxcbiAgLmFydC12aWRlby1wbGF5ZXIuYXJ0LW1pbmkgLmFydC1zdWJ0aXRsZSB7XG4gICAgZGlzcGxheTogbm9uZSAhaW1wb3J0YW50OyB9XG5cbi5hcnQtYXV0by1zaXplIHtcbiAgZGlzcGxheTogZmxleDtcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7IH1cblxuLmFydC12aWRlby1wbGF5ZXJbZGF0YS1mbGlwPVwiaG9yaXpvbnRhbFwiXSAuYXJ0LXZpZGVvIHtcbiAgdHJhbnNmb3JtOiBzY2FsZVgoLTEpOyB9XG5cbi5hcnQtdmlkZW8tcGxheWVyW2RhdGEtZmxpcD1cInZlcnRpY2FsXCJdIC5hcnQtdmlkZW8ge1xuICB0cmFuc2Zvcm06IHNjYWxlWSgtMSk7IH1cblxuOnJvb3Qge1xuICAtLWJhbGxvb24tY29sb3I6IHJnYmEoMTYsIDE2LCAxNiwgMC45NSk7XG4gIC0tYmFsbG9vbi1mb250LXNpemU6IDEycHg7XG4gIC0tYmFsbG9vbi1tb3ZlOiA0cHg7IH1cblxuYnV0dG9uW2FyaWEtbGFiZWxdW2RhdGEtYmFsbG9vbi1wb3NdIHtcbiAgb3ZlcmZsb3c6IHZpc2libGU7IH1cblxuW2FyaWEtbGFiZWxdW2RhdGEtYmFsbG9vbi1wb3NdIHtcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xuICBjdXJzb3I6IHBvaW50ZXI7IH1cbiAgW2FyaWEtbGFiZWxdW2RhdGEtYmFsbG9vbi1wb3NdOmFmdGVyIHtcbiAgICBvcGFjaXR5OiAwO1xuICAgIHBvaW50ZXItZXZlbnRzOiBub25lO1xuICAgIHRyYW5zaXRpb246IGFsbCAwLjE4cyBlYXNlLW91dCAwLjE4cztcbiAgICB0ZXh0LWluZGVudDogMDtcbiAgICBmb250LWZhbWlseTogLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAnU2Vnb2UgVUknLCBSb2JvdG8sIE94eWdlbiwgVWJ1bnR1LCBDYW50YXJlbGwsICdPcGVuIFNhbnMnLCAnSGVsdmV0aWNhIE5ldWUnLCBzYW5zLXNlcmlmO1xuICAgIGZvbnQtd2VpZ2h0OiBub3JtYWw7XG4gICAgZm9udC1zdHlsZTogbm9ybWFsO1xuICAgIHRleHQtc2hhZG93OiBub25lO1xuICAgIGZvbnQtc2l6ZTogdmFyKC0tYmFsbG9vbi1mb250LXNpemUpO1xuICAgIGJhY2tncm91bmQ6IHZhcigtLWJhbGxvb24tY29sb3IpO1xuICAgIGJvcmRlci1yYWRpdXM6IDJweDtcbiAgICBjb2xvcjogI2ZmZjtcbiAgICBjb250ZW50OiBhdHRyKGFyaWEtbGFiZWwpO1xuICAgIHBhZGRpbmc6IDAuNWVtIDFlbTtcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgd2hpdGUtc3BhY2U6IG5vd3JhcDtcbiAgICBsaW5lLWhlaWdodDogMS4yO1xuICAgIHotaW5kZXg6IDEwOyB9XG4gIFthcmlhLWxhYmVsXVtkYXRhLWJhbGxvb24tcG9zXTpiZWZvcmUge1xuICAgIHdpZHRoOiAwO1xuICAgIGhlaWdodDogMDtcbiAgICBib3JkZXI6IDVweCBzb2xpZCB0cmFuc3BhcmVudDtcbiAgICBib3JkZXItdG9wLWNvbG9yOiB2YXIoLS1iYWxsb29uLWNvbG9yKTtcbiAgICBvcGFjaXR5OiAwO1xuICAgIHBvaW50ZXItZXZlbnRzOiBub25lO1xuICAgIHRyYW5zaXRpb246IGFsbCAwLjE4cyBlYXNlLW91dCAwLjE4cztcbiAgICBjb250ZW50OiAnJztcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgei1pbmRleDogMTA7IH1cbiAgW2FyaWEtbGFiZWxdW2RhdGEtYmFsbG9vbi1wb3NdOmhvdmVyOmJlZm9yZSwgW2FyaWEtbGFiZWxdW2RhdGEtYmFsbG9vbi1wb3NdOmhvdmVyOmFmdGVyIHtcbiAgICBvcGFjaXR5OiAxO1xuICAgIHBvaW50ZXItZXZlbnRzOiBub25lOyB9XG4gIFthcmlhLWxhYmVsXVtkYXRhLWJhbGxvb24tcG9zXVtkYXRhLWJhbGxvb24tcG9zPSd1cCddOmFmdGVyIHtcbiAgICBib3R0b206IDEwMCU7XG4gICAgbGVmdDogNTAlO1xuICAgIG1hcmdpbi1ib3R0b206IDEwcHg7XG4gICAgdHJhbnNmb3JtOiB0cmFuc2xhdGUoLTUwJSwgdmFyKC0tYmFsbG9vbi1tb3ZlKSk7XG4gICAgdHJhbnNmb3JtLW9yaWdpbjogdG9wOyB9XG4gIFthcmlhLWxhYmVsXVtkYXRhLWJhbGxvb24tcG9zXVtkYXRhLWJhbGxvb24tcG9zPSd1cCddOmJlZm9yZSB7XG4gICAgYm90dG9tOiAxMDAlO1xuICAgIGxlZnQ6IDUwJTtcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZSgtNTAlLCB2YXIoLS1iYWxsb29uLW1vdmUpKTtcbiAgICB0cmFuc2Zvcm0tb3JpZ2luOiB0b3A7IH1cbiAgW2FyaWEtbGFiZWxdW2RhdGEtYmFsbG9vbi1wb3NdW2RhdGEtYmFsbG9vbi1wb3M9J3VwJ106aG92ZXI6YWZ0ZXIge1xuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlKC01MCUsIDApOyB9XG4gIFthcmlhLWxhYmVsXVtkYXRhLWJhbGxvb24tcG9zXVtkYXRhLWJhbGxvb24tcG9zPSd1cCddOmhvdmVyOmJlZm9yZSB7XG4gICAgdHJhbnNmb3JtOiB0cmFuc2xhdGUoLTUwJSwgMCk7IH1cbiJdfQ== */";
+  styleInject(css);
+
   var optionValidator = createCommonjsModule(function (module, exports) {
   !function(r,t){module.exports=t();}(commonjsGlobal,function(){function e(r){return (e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(r){return typeof r}:function(r){return r&&"function"==typeof Symbol&&r.constructor===Symbol&&r!==Symbol.prototype?"symbol":typeof r})(r)}var n=Object.prototype.toString,c=function(r){if(void 0===r)return "undefined";if(null===r)return "null";var t=e(r);if("boolean"===t)return "boolean";if("string"===t)return "string";if("number"===t)return "number";if("symbol"===t)return "symbol";if("function"===t)return function(r){return "GeneratorFunction"===o(r)}(r)?"generatorfunction":"function";if(function(r){return Array.isArray?Array.isArray(r):r instanceof Array}(r))return "array";if(function(r){if(r.constructor&&"function"==typeof r.constructor.isBuffer)return r.constructor.isBuffer(r);return !1}(r))return "buffer";if(function(r){try{if("number"==typeof r.length&&"function"==typeof r.callee)return !0}catch(r){if(-1!==r.message.indexOf("callee"))return !0}return !1}(r))return "arguments";if(function(r){return r instanceof Date||"function"==typeof r.toDateString&&"function"==typeof r.getDate&&"function"==typeof r.setDate}(r))return "date";if(function(r){return r instanceof Error||"string"==typeof r.message&&r.constructor&&"number"==typeof r.constructor.stackTraceLimit}(r))return "error";if(function(r){return r instanceof RegExp||"string"==typeof r.flags&&"boolean"==typeof r.ignoreCase&&"boolean"==typeof r.multiline&&"boolean"==typeof r.global}(r))return "regexp";switch(o(r)){case"Symbol":return "symbol";case"Promise":return "promise";case"WeakMap":return "weakmap";case"WeakSet":return "weakset";case"Map":return "map";case"Set":return "set";case"Int8Array":return "int8array";case"Uint8Array":return "uint8array";case"Uint8ClampedArray":return "uint8clampedarray";case"Int16Array":return "int16array";case"Uint16Array":return "uint16array";case"Int32Array":return "int32array";case"Uint32Array":return "uint32array";case"Float32Array":return "float32array";case"Float64Array":return "float64array"}if(function(r){return "function"==typeof r.throw&&"function"==typeof r.return&&"function"==typeof r.next}(r))return "generator";switch(t=n.call(r)){case"[object Object]":return "object";case"[object Map Iterator]":return "mapiterator";case"[object Set Iterator]":return "setiterator";case"[object String Iterator]":return "stringiterator";case"[object Array Iterator]":return "arrayiterator"}return t.slice(8,-1).toLowerCase().replace(/\s/g,"")};function o(r){return r.constructor?r.constructor.name:null}function f(r,t){var e=2<arguments.length&&void 0!==arguments[2]?arguments[2]:["option"];return s(r,t,e),y(r,t,e),function(a,i,u){var r=c(i),t=c(a);if("object"===r){if("object"!==t)throw new Error("[Type Error]: '".concat(u.join("."),"' require 'object' type, but got '").concat(t,"'"));Object.keys(i).forEach(function(r){var t=a[r],e=i[r],n=u.slice();n.push(r),s(t,e,n),y(t,e,n),f(t,e,n);});}if("array"===r){if("array"!==t)throw new Error("[Type Error]: '".concat(u.join("."),"' require 'array' type, but got '").concat(t,"'"));a.forEach(function(r,t){var e=a[t],n=i[t]||i[0],o=u.slice();o.push(t),s(e,n,o),y(e,n,o),f(e,n,o);});}}(r,t,e),r}function s(r,t,e){if("string"===c(t)){var n=c(r);if(!(-1<t.indexOf("|")?t.split("|").map(function(r){return r.toLowerCase().trim()}).filter(Boolean).some(function(r){return n===r}):t.toLowerCase().trim()===n))throw new Error("[Type Error]: '".concat(e.join("."),"' require '").concat(t,"' type, but got '").concat(n,"'"))}}function y(r,t,e){if("function"===c(t)){var n=t(r,c(r),e);if(!0!==n){var o=c(n);throw "string"===o?new Error(n):"error"===o?n:new Error("[Validator Error]: The scheme for '".concat(e.join("."),"' validator require return true, but got '").concat(n,"'"))}}}return f.kindOf=c,f});
   });
@@ -197,6 +227,11 @@
     return Emitter;
   }();
 
+  var userAgent = window.navigator.userAgent;
+  var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+  var isSafari = /^((?!chrome|android).)*safari/i.test(userAgent);
+  var isWechat = /MicroMessenger/i.test(userAgent);
+
   function query(selector) {
     var parent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
     return parent.querySelector(selector);
@@ -254,8 +289,17 @@
   }
   function tooltip(target, msg) {
     var pos = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'up';
+    if (isMobile) return;
     target.setAttribute('aria-label', msg);
     target.setAttribute('data-balloon-pos', pos);
+  }
+  function isInViewport(el) {
+    var rect = el.getBoundingClientRect();
+    var windowHeight = window.innerHeight || document.documentElement.clientHeight;
+    var windowWidth = window.innerWidth || document.documentElement.clientWidth;
+    var vertInView = rect.top <= windowHeight && rect.top + rect.height >= 0;
+    var horInView = rect.left <= windowWidth && rect.left + rect.width >= 0;
+    return vertInView && horInView;
   }
 
   function _isNativeFunction(fn) {
@@ -431,7 +475,7 @@
 
     return url.trim().toLowerCase().split('.').pop();
   }
-  function downloadFile(url, name) {
+  function download(url, name) {
     var elink = document.createElement('a');
     elink.style.display = 'none';
     elink.href = url;
@@ -589,6 +633,17 @@
     var sec = Math.floor(second - hour * 3600 - min * 60);
     return (hour > 0 ? [hour, min, sec] : [min, sec]).map(add0).join(':');
   }
+  function escape(str) {
+    return str.replace(/[&<>'"]/g, function (tag) {
+      return {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        "'": '&#39;',
+        '"': '&quot;'
+      }[tag] || tag;
+    });
+  }
 
 
 
@@ -607,13 +662,14 @@
     sublings: sublings,
     inverseClass: inverseClass,
     tooltip: tooltip,
+    isInViewport: isInViewport,
     ArtPlayerError: ArtPlayerError,
     errorHandle: errorHandle,
     srtToVtt: srtToVtt,
     vttToBlob: vttToBlob,
     assToVtt: assToVtt,
     getExt: getExt,
-    downloadFile: downloadFile,
+    download: download,
     def: def,
     has: has,
     proxyPropertys: proxyPropertys,
@@ -622,13 +678,49 @@
     debounce: debounce,
     throttle: throttle,
     clamp: clamp,
-    secondToTime: secondToTime
+    secondToTime: secondToTime,
+    escape: escape,
+    userAgent: userAgent,
+    isMobile: isMobile,
+    isSafari: isSafari,
+    isWechat: isWechat
   });
+
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  var defineProperty = _defineProperty;
+
+  function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+  function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
   function validElement(value, type, paths) {
     return errorHandle(type === 'string' || value instanceof Element, "".concat(paths.join('.'), " require 'string' or 'Element' type"));
   }
 
+  var component = {
+    html: validElement,
+    disable: 'boolean|undefined',
+    name: 'string|undefined',
+    index: 'number|undefined',
+    style: 'object|undefined',
+    click: 'function|undefined',
+    mounted: 'function|undefined',
+    tooltip: 'string|undefined'
+  };
   var scheme = {
     container: validElement,
     url: 'string',
@@ -641,6 +733,7 @@
     muted: 'boolean',
     autoplay: 'boolean',
     autoSize: 'boolean',
+    autoMin: 'boolean',
     loop: 'boolean',
     flip: 'boolean',
     playbackRate: 'boolean',
@@ -650,6 +743,7 @@
     hotkey: 'boolean',
     pip: 'boolean',
     mutex: 'boolean',
+    light: 'boolean',
     backdrop: 'boolean',
     fullscreen: 'boolean',
     fullscreenWeb: 'boolean',
@@ -660,44 +754,18 @@
     networkMonitor: 'boolean',
     plugins: ['function'],
     whitelist: ['string|function|regexp'],
-    layers: [{
-      disable: 'boolean|undefined',
-      name: 'string|undefined',
-      index: 'number|undefined',
-      html: validElement,
-      style: 'object|undefined',
-      click: 'function|undefined',
-      mounted: 'function|undefined',
-      tooltip: 'string|undefined'
-    }],
-    contextmenu: [{
-      disable: 'boolean|undefined',
-      name: 'string|undefined',
-      index: 'number|undefined',
-      html: validElement,
-      style: 'object|undefined',
-      click: 'function|undefined',
-      mounted: 'function|undefined',
-      tooltip: 'string|undefined'
-    }],
-    quality: [{
-      default: 'boolean|undefined',
-      name: 'string',
-      url: 'string'
-    }],
-    controls: [{
-      disable: 'boolean|undefined',
-      name: 'string|undefined',
-      index: 'number|undefined',
-      html: validElement,
-      style: 'object|undefined',
-      click: 'function|undefined',
-      mounted: 'function|undefined',
-      tooltip: 'string|undefined',
+    layers: [component],
+    contextmenu: [component],
+    controls: [_objectSpread({}, component, {
       position: function position(value, type, paths) {
         var position = ['top', 'left', 'right'];
         return errorHandle(position.includes(value), "".concat(paths.join('.'), " only accept ").concat(position.toString(), " as parameters"));
       }
+    })],
+    quality: [{
+      default: 'boolean|undefined',
+      name: 'string',
+      url: 'string'
     }],
     highlight: [{
       time: 'number',
@@ -726,24 +794,20 @@
   };
 
   var Whitelist = function Whitelist(art) {
-    var _this = this;
-
     classCallCheck(this, Whitelist);
 
     var kindOf = art.constructor.kindOf,
         whitelist = art.option.whitelist;
-    this.ua = navigator.userAgent;
-    this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(this.ua);
-    this.state = !this.isMobile || whitelist.some(function (item) {
+    this.state = !art.isMobile || whitelist.some(function (item) {
       switch (kindOf(item)) {
         case 'string':
-          return _this.ua.indexOf(item) > -1;
+          return item === '*' || art.userAgent.indexOf(item) > -1;
 
         case 'function':
-          return item(_this.ua);
+          return item(art.userAgent);
 
         case 'regexp':
-          return item.test(_this.ua);
+          return item.test(art.userAgent);
 
         default:
           return false;
@@ -791,10 +855,10 @@
         var _this$art$option = this.art.option,
             theme = _this$art$option.theme,
             backdrop = _this$art$option.backdrop;
-        this.$container.innerHTML = "\n          <div class=\"art-video-player art-subtitle-show art-layer-show\" style=\"--theme: ".concat(theme, "\">\n            <video class=\"art-video\">\n              <track default kind=\"metadata\"></track>\n            </video>\n            <div class=\"art-subtitle\"></div>\n            <div class=\"art-danmuku\"></div>\n            <div class=\"art-layers\"></div>\n            <div class=\"art-mask\">\n              <div class=\"art-state\"></div>\n            </div>\n            <div class=\"art-bottom\">\n              <div class=\"art-progress\"></div>\n              <div class=\"art-controls\">\n                <div class=\"art-controls-left\"></div>\n                <div class=\"art-controls-right\"></div>\n              </div>\n            </div>\n            <div class=\"art-loading\"></div>\n            <div class=\"art-notice\">\n              <div class=\"art-notice-inner\"></div>\n            </div>\n            <div class=\"art-settings\">\n              <div class=\"art-setting-inner\">\n                <div class=\"art-setting-body\"></div>\n              </div>\n            </div>\n            <div class=\"art-info\">\n              <div class=\"art-info-panel\">\n                <div class=\"art-info-item\">\n                  <div class=\"art-info-title\">Player version:</div>\n                  <div class=\"art-info-content\">3.3.1</div>\n                </div>\n                <div class=\"art-info-item\">\n                  <div class=\"art-info-title\">Video url:</div>\n                  <div class=\"art-info-content\" data-video=\"src\"></div>\n                </div>\n                <div class=\"art-info-item\">\n                  <div class=\"art-info-title\">Video volume:</div>\n                  <div class=\"art-info-content\" data-video=\"volume\"></div>\n                </div>\n                <div class=\"art-info-item\">\n                  <div class=\"art-info-title\">Video time:</div>\n                  <div class=\"art-info-content\" data-video=\"currentTime\"></div>\n                </div>\n                <div class=\"art-info-item\">\n                  <div class=\"art-info-title\">Video duration:</div>\n                  <div class=\"art-info-content\" data-video=\"duration\"></div>\n                </div>\n                <div class=\"art-info-item\">\n                  <div class=\"art-info-title\">Video resolution:</div>\n                  <div class=\"art-info-content\">\n                    <span data-video=\"videoWidth\"></span> x <span data-video=\"videoHeight\"></span>\n                  </div>\n                </div>\n              </div>\n              <div class=\"art-info-close\">[x]</div>\n            </div>\n            <div class=\"art-pip-header\">\n              <div class=\"art-pip-title\"></div>\n              <div class=\"art-pip-close\">\xD7</div>\n            </div>\n            <div class=\"art-contextmenus\"></div>\n          </div>\n        ");
+        this.$container.innerHTML = "\n          <div class=\"art-undercover\"></div>\n          <div class=\"art-video-player art-subtitle-show art-layer-show\" style=\"--theme: ".concat(theme, "\">\n            <video class=\"art-video\"></video>\n            <div class=\"art-subtitle\"></div>\n            <div class=\"art-danmuku\"></div>\n            <div class=\"art-layers\"></div>\n            <div class=\"art-mask\">\n              <div class=\"art-state\"></div>\n            </div>\n            <div class=\"art-bottom\">\n              <div class=\"art-progress\"></div>\n              <div class=\"art-controls\">\n                <div class=\"art-controls-left\"></div>\n                <div class=\"art-controls-right\"></div>\n              </div>\n            </div>\n            <div class=\"art-loading\"></div>\n            <div class=\"art-notice\">\n              <div class=\"art-notice-inner\"></div>\n            </div>\n            <div class=\"art-settings\">\n              <div class=\"art-setting-inner\">\n                <div class=\"art-setting-body\"></div>\n              </div>\n            </div>\n            <div class=\"art-info\">\n              <div class=\"art-info-panel\">\n                <div class=\"art-info-item\">\n                  <div class=\"art-info-title\">Player version:</div>\n                  <div class=\"art-info-content\">3.5.8</div>\n                </div>\n                <div class=\"art-info-item\">\n                  <div class=\"art-info-title\">Video url:</div>\n                  <div class=\"art-info-content\" data-video=\"src\"></div>\n                </div>\n                <div class=\"art-info-item\">\n                  <div class=\"art-info-title\">Video volume:</div>\n                  <div class=\"art-info-content\" data-video=\"volume\"></div>\n                </div>\n                <div class=\"art-info-item\">\n                  <div class=\"art-info-title\">Video time:</div>\n                  <div class=\"art-info-content\" data-video=\"currentTime\"></div>\n                </div>\n                <div class=\"art-info-item\">\n                  <div class=\"art-info-title\">Video duration:</div>\n                  <div class=\"art-info-content\" data-video=\"duration\"></div>\n                </div>\n                <div class=\"art-info-item\">\n                  <div class=\"art-info-title\">Video resolution:</div>\n                  <div class=\"art-info-content\">\n                    <span data-video=\"videoWidth\"></span> x <span data-video=\"videoHeight\"></span>\n                  </div>\n                </div>\n              </div>\n              <div class=\"art-info-close\">[x]</div>\n            </div>\n            <div class=\"art-mini-header\">\n              <div class=\"art-mini-title\"></div>\n              <div class=\"art-mini-close\">\xD7</div>\n            </div>\n            <div class=\"art-contextmenus\"></div>\n          </div>\n        ");
+        this.$undercover = this.query('.art-undercover');
         this.$player = this.query('.art-video-player');
         this.$video = this.query('.art-video');
-        this.$track = this.query('.art-video track');
         this.$subtitle = this.query('.art-subtitle');
         this.$danmuku = this.query('.art-danmuku');
         this.$bottom = this.query('.art-bottom');
@@ -814,15 +878,19 @@
         this.$info = this.query('.art-info');
         this.$infoPanel = this.query('.art-info-panel');
         this.$infoClose = this.query('.art-info-close');
-        this.$pipHeader = this.query('.art-pip-header');
-        this.$pipTitle = this.query('.art-pip-title');
-        this.$pipClose = this.query('.art-pip-close');
+        this.$miniHeader = this.query('.art-mini-header');
+        this.$miniTitle = this.query('.art-mini-title');
+        this.$miniClose = this.query('.art-mini-close');
         this.$contextmenu = this.query('.art-contextmenus');
 
         if (backdrop) {
           addClass(this.$settingInner, 'art-backdrop-filter');
           addClass(this.$info, 'art-backdrop-filter');
           addClass(this.$contextmenu, 'art-backdrop-filter');
+        }
+
+        if (this.art.isMobile) {
+          addClass(this.$container, 'art-mobile');
         }
       }
     }, {
@@ -864,6 +932,8 @@
   var zhCn = {
   	"Video info": "视频统计信息",
   	Close: Close,
+  	"Light Off": "关灯",
+  	"Light On": "开灯",
   	"Video load failed": "视频加载失败",
   	Volume: Volume,
   	Play: Play,
@@ -893,7 +963,9 @@
   	"Web fullscreen": "网页全屏",
   	"Exit web fullscreen": "退出网页全屏",
   	"Mini player": "迷你播放器",
-  	"Exit mini player": "退出迷你播放器",
+  	"PIP mode": "画中画模式",
+  	"Exit PIP mode": "退出画中画模式",
+  	"PIP not supported": "不支持画中画模式",
   	"Local Subtitle": "本地字幕",
   	"Local Video": "本地视频",
   	"Subtitle offset time": "字幕偏移时间",
@@ -918,6 +990,8 @@
   var zhTw = {
   	"Video info": "影片統計訊息",
   	Close: Close$1,
+  	"Light Off": "關燈",
+  	"Light On": "開燈",
   	"Video load failed": "影片載入失敗",
   	Volume: Volume$1,
   	Play: Play$1,
@@ -947,7 +1021,9 @@
   	"Web fullscreen": "網頁全屏",
   	"Exit web fullscreen": "退出網頁全屏",
   	"Mini player": "迷你播放器",
-  	"Exit mini player": "退出迷你播放器",
+  	"PIP mode": "畫中畫模式",
+  	"Exit PIP mode": "退出畫中畫模式",
+  	"PIP not supported": "不支持畫中畫模式",
   	"Local Subtitle": "本地字幕",
   	"Local Video": "本地視頻",
   	"Subtitle offset time": "字幕偏移時間",
@@ -1006,13 +1082,15 @@
         if (typeName && typeCallback) {
           sleep().then(function () {
             art.loading.show = true;
-            typeCallback.call(art, $video, url, art);
-            art.emit('customType', typeName);
+            var result = typeCallback.call(art, $video, url, art);
+            def(art, typeName, {
+              value: result
+            });
           });
         } else {
           $video.src = url;
           art.option.url = url;
-          art.emit('urlChange', url);
+          art.emit('url', url);
         }
       }
     });
@@ -1077,6 +1155,7 @@
       art.loading.show = false;
     });
     art.once('video:canplay', function () {
+      art.loading.show = false;
       art.controls.show = true;
       art.mask.show = true;
       art.emit('ready');
@@ -1117,9 +1196,14 @@
     }); // art.on('video:loadeddata', () => {
     // });
 
-    art.on('video:loadedmetadata', function () {
-      if (option.autoSize) {
-        player.autoSize = true;
+    art.once('video:loadedmetadata', function () {
+      player.autoSize = option.autoSize;
+
+      if (art.isMobile) {
+        art.loading.show = false;
+        art.controls.show = true;
+        art.mask.show = true;
+        art.emit('ready');
       }
     });
     art.on('video:loadstart', function () {
@@ -1159,6 +1243,30 @@
     });
   }
 
+  function exclusiveInit(art, player) {
+    var props = ['mini', 'pip', 'fullscreen', 'fullscreenWeb', 'fullscreenRotate'];
+    props.forEach(function (name) {
+      art.on(name, function (state) {
+        if (state) {
+          props.filter(function (item) {
+            return item !== name;
+          }).forEach(function (item) {
+            if (player[item]) {
+              player[item] = false;
+            }
+          });
+        }
+      });
+    });
+    def(player, 'normal', {
+      get: function get() {
+        return props.every(function (name) {
+          return !player[name];
+        });
+      }
+    });
+  }
+
   function playMix(art, player) {
     var i18n = art.i18n,
         notice = art.notice,
@@ -1194,7 +1302,7 @@
     });
   }
 
-  function pauseMin(art, player) {
+  function pauseMix(art, player) {
     var $video = art.template.$video,
         i18n = art.i18n,
         notice = art.notice;
@@ -1233,8 +1341,18 @@
     def(player, 'seek', {
       set: function set(time) {
         player.currentTime = time;
-        notice.show = "".concat(secondToTime(time), " / ").concat(secondToTime(player.duration));
-        art.emit('seek', time);
+        notice.show = "".concat(secondToTime(player.currentTime), " / ").concat(secondToTime(player.duration));
+        art.emit('seek', player.currentTime);
+      }
+    });
+    def(player, 'forward', {
+      set: function set(time) {
+        player.seek = player.currentTime + time;
+      }
+    });
+    def(player, 'backward', {
+      set: function set(time) {
+        player.seek = player.currentTime - time;
       }
     });
   }
@@ -1271,12 +1389,13 @@
   }
 
   function currentTimeMix(art, player) {
+    var $video = art.template.$video;
     def(player, 'currentTime', {
       get: function get() {
-        return art.template.$video.currentTime || 0;
+        return $video.currentTime || 0;
       },
-      set: function set(currentTime) {
-        art.template.$video.currentTime = clamp(currentTime, 0, player.duration);
+      set: function set(time) {
+        $video.currentTime = clamp(time, 0, player.duration || Infinity);
       }
     });
   }
@@ -1284,7 +1403,7 @@
   function durationMix(art, player) {
     def(player, 'duration', {
       get: function get() {
-        return art.template.$video.duration || 0;
+        return art.template.$video.duration || Infinity;
       }
     });
   }
@@ -1345,11 +1464,11 @@
           $video.playbackRate = rate;
           $player.dataset.playbackRate = rate;
           notice.show = "".concat(i18n.get('Rate'), ": ").concat(rate === 1.0 ? i18n.get('Normal') : "".concat(rate, "x"));
-          art.emit('playbackRateChange', rate);
+          art.emit('playbackRate', rate);
         } else if (player.playbackRate) {
           player.playbackRate = 1;
           delete $player.dataset.playbackRate;
-          art.emit('playbackRateRemove');
+          art.emit('playbackRate');
         }
       }
     });
@@ -1360,7 +1479,6 @@
 
           if (playbackRate) {
             player.playbackRate = Number(playbackRate);
-            art.emit('playbackRateReset');
           }
         }
       }
@@ -1409,13 +1527,13 @@
 
           $player.dataset.aspectRatio = ratio;
           notice.show = "".concat(i18n.get('Aspect ratio'), ": ").concat(ratio === 'default' ? i18n.get('Default') : ratio);
-          art.emit('aspectRatioChange', ratio);
+          art.emit('aspectRatio', ratio);
         } else if (player.aspectRatio) {
           setStyle($video, 'width', null);
           setStyle($video, 'height', null);
           setStyle($video, 'padding', null);
           delete $player.dataset.aspectRatio;
-          art.emit('aspectRatioRemove');
+          art.emit('aspectRatio');
         }
       }
     });
@@ -1424,7 +1542,6 @@
         if (value && player.aspectRatio) {
           var aspectRatio = player.aspectRatio;
           player.aspectRatio = aspectRatio;
-          art.emit('aspectRatioReset');
         }
       }
     });
@@ -1434,29 +1551,30 @@
     var option = art.option,
         notice = art.notice,
         $video = art.template.$video;
-    def(player, 'getScreenshotDataURL', {
-      value: function value() {
-        try {
-          var canvas = document.createElement('canvas');
-          canvas.width = $video.videoWidth;
-          canvas.height = $video.videoHeight;
-          canvas.getContext('2d').drawImage($video, 0, 0);
-          return canvas.toDataURL('image/png');
-        } catch (err) {
-          notice.show = err;
-          throw err;
-        }
-      }
-    });
-    def(player, 'getScreenshotBlobUrl', {
+    var $canvas = document.createElement('canvas');
+    def(player, 'getDataURL', {
       value: function value() {
         return new Promise(function (resolve, reject) {
           try {
-            var canvas = document.createElement('canvas');
-            canvas.width = $video.videoWidth;
-            canvas.height = $video.videoHeight;
-            canvas.getContext('2d').drawImage($video, 0, 0);
-            canvas.toBlob(function (blob) {
+            $canvas.width = $video.videoWidth;
+            $canvas.height = $video.videoHeight;
+            $canvas.getContext('2d').drawImage($video, 0, 0);
+            resolve($canvas.toDataURL('image/png'));
+          } catch (err) {
+            notice.show = err;
+            reject(err);
+          }
+        });
+      }
+    });
+    def(player, 'getBlobUrl', {
+      value: function value() {
+        return new Promise(function (resolve, reject) {
+          try {
+            $canvas.width = $video.videoWidth;
+            $canvas.height = $video.videoHeight;
+            $canvas.getContext('2d').drawImage($video, 0, 0);
+            $canvas.toBlob(function (blob) {
               resolve(URL.createObjectURL(blob));
             });
           } catch (err) {
@@ -1468,12 +1586,10 @@
     });
     def(player, 'screenshot', {
       value: function value() {
-        var dataUri = player.getScreenshotDataURL();
-
-        if (dataUri) {
-          downloadFile(dataUri, "".concat(option.title || 'artplayer', "_").concat(secondToTime($video.currentTime), ".png"));
+        player.getDataURL().then(function (dataUri) {
+          download(dataUri, "".concat(option.title || 'artplayer', "_").concat(secondToTime($video.currentTime), ".png"));
           art.emit('screenshot', dataUri);
-        }
+        });
       }
     });
   }
@@ -1664,21 +1780,20 @@
         return screenfull.isFullscreen;
       },
       set: function set(value) {
-        if (player.fullscreenWeb) {
-          player.fullscreenWeb = false;
-        }
-
         if (value) {
           screenfull.request($player).then(function () {
             addClass($player, 'art-fullscreen');
             player.aspectRatioReset = true;
-            art.emit('fullscreenChange', true);
+            art.emit('resize');
+            art.emit('fullscreen', true);
           });
         } else {
           screenfull.exit().then(function () {
             removeClass($player, 'art-fullscreen');
             player.aspectRatioReset = true;
-            art.emit('fullscreenChange', false);
+            player.autoSize = art.option.autoSize;
+            art.emit('resize');
+            art.emit('fullscreen');
           });
         }
       }
@@ -1696,21 +1811,20 @@
     var $player = art.template.$player;
     def(player, 'fullscreenWeb', {
       get: function get() {
-        return hasClass($player, 'art-web-fullscreen');
+        return hasClass($player, 'art-fullscreen-web');
       },
       set: function set(value) {
-        if (player.fullscreen) {
-          player.fullscreen = false;
-        }
-
         if (value) {
-          addClass($player, 'art-web-fullscreen');
+          addClass($player, 'art-fullscreen-web');
           player.aspectRatioReset = true;
-          art.emit('fullscreenWebChange', true);
+          art.emit('resize');
+          art.emit('fullscreenWeb', true);
         } else {
-          removeClass($player, 'art-web-fullscreen');
+          removeClass($player, 'art-fullscreen-web');
           player.aspectRatioReset = true;
-          art.emit('fullscreenWebChange', false);
+          player.autoSize = art.option.autoSize;
+          art.emit('resize');
+          art.emit('fullscreenWeb');
         }
       }
     });
@@ -1718,6 +1832,51 @@
       set: function set(value) {
         if (value) {
           player.fullscreenWeb = !player.fullscreenWeb;
+        }
+      }
+    });
+  }
+
+  function fullscreenRotateMix(art, player) {
+    var _art$template = art.template,
+        $container = _art$template.$container,
+        $player = _art$template.$player;
+    def(player, 'fullscreenRotate', {
+      get: function get() {
+        return hasClass($container, 'art-fullscreen-rotate');
+      },
+      set: function set(value) {
+        if (value) {
+          addClass($container, 'art-fullscreen-rotate');
+          player.autoSize = true;
+          var _document$body = document.body,
+              bodyHeight = _document$body.clientHeight,
+              bodyWidth = _document$body.clientWidth;
+          var playerHeight = $player.clientHeight,
+              playerWidth = $player.clientWidth;
+          var bodyRatio = bodyWidth / bodyHeight;
+          var videoRatio = playerWidth / playerHeight;
+          var needSpin = bodyRatio < videoRatio;
+
+          if (needSpin) {
+            var scale = Math.min(bodyHeight / playerWidth, bodyWidth / playerHeight).toFixed(2);
+            setStyle($player, 'transform', "rotate(90deg) scale(".concat(scale, ",").concat(scale, ")"));
+            art.emit('resize');
+            art.emit('fullscreenRotate', true);
+          }
+        } else {
+          removeClass($container, 'art-fullscreen-rotate');
+          player.autoSize = art.option.autoSize;
+          setStyle($player, 'transform', null);
+          art.emit('resize');
+          art.emit('fullscreenRotate');
+        }
+      }
+    });
+    def(player, 'fullscreenRotateToggle', {
+      set: function set(value) {
+        if (value) {
+          player.fullscreenRotate = !player.fullscreenRotate;
         }
       }
     });
@@ -1747,10 +1906,10 @@
       }
     });
     proxy($video, 'enterpictureinpicture', function () {
-      art.emit('pipChange', true);
+      art.emit('pip', true);
     });
     proxy($video, 'leavepictureinpicture', function () {
-      art.emit('pipChange', false);
+      art.emit('pip');
     });
   }
 
@@ -1764,96 +1923,33 @@
       set: function set(value) {
         if (value) {
           $video.webkitSetPresentationMode('picture-in-picture');
-          art.emit('pipChange', true);
+          art.emit('pip', true);
         } else {
           $video.webkitSetPresentationMode('inline');
-          art.emit('pipChange', false);
-        }
-      }
-    });
-  }
-
-  function customPip(art, player) {
-    var option = art.option,
-        i18n = art.i18n,
-        _art$template = art.template,
-        $player = _art$template.$player,
-        $pipClose = _art$template.$pipClose,
-        $pipTitle = _art$template.$pipTitle,
-        $pipHeader = _art$template.$pipHeader,
-        proxy = art.events.proxy;
-    var cacheStyle = '';
-    var isDroging = false;
-    var lastPageX = 0;
-    var lastPageY = 0;
-    var lastPlayerLeft = 0;
-    var lastPlayerTop = 0;
-    proxy($pipHeader, 'mousedown', function (event) {
-      isDroging = true;
-      lastPageX = event.pageX;
-      lastPageY = event.pageY;
-      lastPlayerLeft = player.left;
-      lastPlayerTop = player.top;
-    });
-    proxy($pipHeader, 'mousemove', function (event) {
-      if (isDroging) {
-        addClass($player, 'art-is-dragging');
-        setStyle($player, 'left', "".concat(lastPlayerLeft + event.pageX - lastPageX, "px"));
-        setStyle($player, 'top', "".concat(lastPlayerTop + event.pageY - lastPageY, "px"));
-      }
-    });
-    proxy(document, 'mouseup', function () {
-      isDroging = false;
-      removeClass($player, 'art-is-dragging');
-    });
-    proxy($pipClose, 'click', function () {
-      player.pip = false;
-      isDroging = false;
-      removeClass($player, 'art-is-dragging');
-    });
-    append($pipTitle, option.title || i18n.get('Mini player'));
-    def(player, 'pip', {
-      get: function get() {
-        return hasClass($player, 'art-pip');
-      },
-      set: function set(value) {
-        if (value) {
-          player.autoSize = false;
-          cacheStyle = $player.style.cssText;
-          addClass($player, 'art-pip');
-          var $body = document.body;
-          setStyle($player, 'top', "".concat($body.clientHeight - player.height - 50, "px"));
-          setStyle($player, 'left', "".concat($body.clientWidth - player.width - 50, "px"));
-          player.fullscreen = false;
-          player.fullscreenWeb = false;
-          player.aspectRatio = false;
-          player.playbackRate = false;
-          art.emit('pipChange', true);
-        } else if (player.pip) {
-          $player.style.cssText = cacheStyle;
-          removeClass($player, 'art-pip');
-          setStyle($player, 'top', null);
-          setStyle($player, 'left', null);
-          player.fullscreen = false;
-          player.fullscreenWeb = false;
-          player.aspectRatio = false;
-          player.playbackRate = false;
-          player.autoSize = true;
-          art.emit('pipChange', false);
+          art.emit('pip');
         }
       }
     });
   }
 
   function pipMix(art, player) {
-    var $video = art.template.$video;
+    var i18n = art.i18n,
+        notice = art.notice,
+        $video = art.template.$video;
 
     if (document.pictureInPictureEnabled) {
       nativePip(art, player);
     } else if ($video.webkitSupportsPresentationMode) {
       webkitPip(art, player);
     } else {
-      customPip(art, player);
+      def(player, 'pip', {
+        get: function get() {
+          return false;
+        },
+        set: function set() {
+          notice.show = i18n.get('PIP not supported');
+        }
+      });
     }
 
     def(player, 'pipToggle', {
@@ -1929,7 +2025,7 @@
             setStyle($player, 'height', "".concat(_percentage, "%"));
           }
 
-          art.emit('autoSizeChange', {
+          art.emit('autoSize', {
             width: player.width,
             height: player.height
           });
@@ -1937,7 +2033,7 @@
           removeClass($container, 'art-auto-size');
           setStyle($player, 'width', null);
           setStyle($player, 'height', null);
-          art.emit('autoSizeRemove');
+          art.emit('autoSize');
         }
       }
     });
@@ -1979,10 +2075,158 @@
           var flipList = ['normal', 'horizontal', 'vertical'];
           errorHandle(flipList.includes(flip), "'flip' only accept ".concat(flipList.toString(), " as parameters"));
           $player.dataset.flip = flip;
-          art.emit('flipChange', flip);
+          art.emit('flip', flip);
         } else {
           delete $player.dataset.flip;
-          art.emit('flipRemove');
+          art.emit('flip');
+        }
+      }
+    });
+  }
+
+  function lightMix(art, player) {
+    var $undercover = art.template.$undercover;
+    def(player, 'light', {
+      get: function get() {
+        return getStyle($undercover, 'display', false) !== 'none';
+      },
+      set: function set(value) {
+        setStyle($undercover, 'display', value ? 'block' : 'none');
+        art.emit('light', value);
+      }
+    });
+  }
+
+  function miniMix(art, player) {
+    var i18n = art.i18n,
+        option = art.option,
+        storage = art.storage,
+        proxy = art.events.proxy,
+        _art$template = art.template,
+        $player = _art$template.$player,
+        $miniClose = _art$template.$miniClose,
+        $miniTitle = _art$template.$miniTitle,
+        $miniHeader = _art$template.$miniHeader;
+    var cacheStyle = '';
+    var isDroging = false;
+    var lastPageX = 0;
+    var lastPageY = 0;
+    var lastPlayerLeft = 0;
+    var lastPlayerTop = 0;
+    proxy($miniHeader, 'mousedown', function (event) {
+      isDroging = true;
+      lastPageX = event.pageX;
+      lastPageY = event.pageY;
+      lastPlayerLeft = player.left;
+      lastPlayerTop = player.top;
+    });
+    proxy(document, 'mousemove', function (event) {
+      if (isDroging) {
+        addClass($player, 'art-is-dragging');
+        var top = lastPlayerTop + event.pageY - lastPageY;
+        var left = lastPlayerLeft + event.pageX - lastPageX;
+        setStyle($player, 'top', "".concat(top, "px"));
+        setStyle($player, 'left', "".concat(left, "px"));
+        storage.set('top', top);
+        storage.set('left', left);
+      }
+    });
+    proxy(document, 'mouseup', function () {
+      isDroging = false;
+      removeClass($player, 'art-is-dragging');
+    });
+    proxy($miniClose, 'click', function () {
+      player.mini = false;
+      isDroging = false;
+      removeClass($player, 'art-is-dragging');
+    });
+    append($miniTitle, option.title || i18n.get('Mini player'));
+    def(player, 'mini', {
+      get: function get() {
+        return hasClass($player, 'art-mini');
+      },
+      set: function set(value) {
+        if (value) {
+          player.autoSize = false;
+          cacheStyle = $player.style.cssText;
+          addClass($player, 'art-mini');
+          var top = storage.get('top');
+          var left = storage.get('left');
+
+          if (top && left) {
+            setStyle($player, 'top', "".concat(top, "px"));
+            setStyle($player, 'left', "".concat(left, "px"));
+
+            if (!isInViewport($miniHeader)) {
+              storage.del('top');
+              storage.del('left');
+              player.mini = true;
+            }
+          } else {
+            var $body = document.body;
+
+            var _top = $body.clientHeight - player.height - 50;
+
+            var _left = $body.clientWidth - player.width - 50;
+
+            storage.set('top', _top);
+            storage.set('left', _left);
+            setStyle($player, 'top', "".concat(_top, "px"));
+            setStyle($player, 'left', "".concat(_left, "px"));
+          }
+
+          player.aspectRatio = false;
+          player.playbackRate = false;
+          art.emit('mini', true);
+        } else {
+          $player.style.cssText = cacheStyle;
+          removeClass($player, 'art-mini');
+          setStyle($player, 'top', null);
+          setStyle($player, 'left', null);
+          player.aspectRatio = false;
+          player.playbackRate = false;
+          player.autoSize = option.autoSize;
+          art.emit('mini');
+        }
+      }
+    });
+    def(player, 'miniToggle', {
+      set: function set(value) {
+        if (value) {
+          player.mini = !player.mini;
+        }
+      }
+    });
+  }
+
+  function loopMin(art, player) {
+    var interval = [];
+    def(player, 'loop', {
+      get: function get() {
+        return interval;
+      },
+      set: function set(value) {
+        if (Array.isArray(value) && typeof value[0] === 'number' && typeof value[1] === 'number') {
+          var start = clamp(value[0], 0, Math.min(value[1], player.duration));
+          var end = clamp(value[1], start, player.duration);
+
+          if (end - start >= 1) {
+            interval = [start, end];
+            art.emit('loop', interval);
+          } else {
+            interval = [];
+            art.emit('loop');
+          }
+        } else {
+          interval = [];
+          art.emit('loop');
+        }
+      }
+    });
+    art.on('video:timeupdate', function () {
+      if (interval.length) {
+        if (player.currentTime < interval[0] || player.currentTime > interval[1]) {
+          player.seek = interval[0];
         }
       }
     });
@@ -1994,8 +2238,9 @@
     urlMix(art, this);
     eventInit(art, this);
     attrInit(art, this);
+    exclusiveInit(art, this);
     playMix(art, this);
-    pauseMin(art, this);
+    pauseMix(art, this);
     toggleMix(art, this);
     seekMix(art, this);
     volumeMix(art, this);
@@ -2007,6 +2252,7 @@
     screenshotMix(art, this);
     fullscreenMix(art, this);
     fullscreenWebMix(art, this);
+    fullscreenRotateMix(art, this);
     pipMix(art, this);
     seekMix$1(art, this);
     playedMix(art, this);
@@ -2014,6 +2260,9 @@
     resizeMix(art, this);
     rectMix(art, this);
     flipMix(art, this);
+    lightMix(art, this);
+    miniMix(art, this);
+    loopMin(art, this);
     proxyPropertys(art, this);
   };
 
@@ -2115,7 +2364,6 @@
           callback($ref, this, this.art);
         }
 
-        this.art.emit("".concat(this.name, ":add"), option);
         def(this, name, {
           get: function get() {
             return option;
@@ -2137,7 +2385,7 @@
           removeClass($player, className);
         }
 
-        this.art.emit("".concat(this.name, ":toggle"), value);
+        this.art.emit(this.name, value);
       }
     }, {
       key: "toggle",
@@ -2151,29 +2399,12 @@
     return Component;
   }();
 
-  function _defineProperty(obj, key, value) {
-    if (key in obj) {
-      Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-      });
-    } else {
-      obj[key] = value;
-    }
+  function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-    return obj;
-  }
-
-  var defineProperty = _defineProperty;
-
-  function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-  function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
   function fullscreen(option) {
     return function (art) {
-      return _objectSpread({}, option, {
+      return _objectSpread$1({}, option, {
         tooltip: art.i18n.get('Fullscreen'),
         mounted: function mounted($control) {
           var proxy = art.events.proxy,
@@ -2184,7 +2415,7 @@
           proxy($control, 'click', function () {
             player.fullscreenToggle = true;
           });
-          art.on('fullscreenChange', function (value) {
+          art.on('fullscreen', function (value) {
             tooltip($control, i18n.get(value ? 'Exit fullscreen' : 'Fullscreen'));
           });
         }
@@ -2192,12 +2423,12 @@
     };
   }
 
-  function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-  function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
   function fullscreenWeb(option) {
     return function (art) {
-      return _objectSpread$1({}, option, {
+      return _objectSpread$2({}, option, {
         tooltip: art.i18n.get('Web fullscreen'),
         mounted: function mounted($control) {
           var proxy = art.events.proxy,
@@ -2208,7 +2439,7 @@
           proxy($control, 'click', function () {
             player.fullscreenWebToggle = true;
           });
-          art.on('fullscreenWebChange', function (value) {
+          art.on('fullscreenWeb', function (value) {
             tooltip($control, i18n.get(value ? 'Exit web fullscreen' : 'Web fullscreen'));
           });
         }
@@ -2216,13 +2447,13 @@
     };
   }
 
-  function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-  function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
   function pip(option) {
     return function (art) {
-      return _objectSpread$2({}, option, {
-        tooltip: art.i18n.get('Mini player'),
+      return _objectSpread$3({}, option, {
+        tooltip: art.i18n.get('PIP mode'),
         mounted: function mounted($control) {
           var proxy = art.events.proxy,
               icons = art.icons,
@@ -2232,20 +2463,20 @@
           proxy($control, 'click', function () {
             player.pipToggle = true;
           });
-          art.on('pipChange', function (value) {
-            tooltip($control, i18n.get(value ? 'Exit mini player' : 'Mini player'));
+          art.on('pip', function (value) {
+            tooltip($control, i18n.get(value ? 'Exit PIP mode' : 'PIP mode'));
           });
         }
       });
     };
   }
 
-  function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-  function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$4(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$4(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
   function playAndPause(option) {
     return function (art) {
-      return _objectSpread$3({}, option, {
+      return _objectSpread$4({}, option, {
         mounted: function mounted($control) {
           var proxy = art.events.proxy,
               icons = art.icons,
@@ -2289,9 +2520,9 @@
     };
   }
 
-  function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$5(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-  function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$4(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$4(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$5(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$5(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$5(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
   function getPosFromEvent(art, event) {
     var $progress = art.template.$progress,
         player = art.player;
@@ -2317,7 +2548,7 @@
           theme = _art$option.theme,
           proxy = art.events.proxy,
           player = art.player;
-      return _objectSpread$4({}, option, {
+      return _objectSpread$5({}, option, {
         html: "\n                <div class=\"art-control-progress-inner\">\n                    <div class=\"art-progress-loaded\"></div>\n                    <div class=\"art-progress-played\" style=\"background: ".concat(theme, "\"></div>\n                    <div class=\"art-progress-highlight\"></div>\n                    <div class=\"art-progress-indicator\" style=\"background: ").concat(theme, "\"></div>\n                    <div class=\"art-progress-tip art-tip\"></div>\n                </div>\n            "),
         mounted: function mounted($control) {
           var isDroging = false;
@@ -2433,12 +2664,12 @@
     };
   }
 
-  function ownKeys$5(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$6(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-  function _objectSpread$5(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$5(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$5(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$6(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$6(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$6(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
   function subtitle(option) {
     return function (art) {
-      return _objectSpread$5({}, option, {
+      return _objectSpread$6({}, option, {
         tooltip: art.i18n.get('Hide subtitle'),
         mounted: function mounted($control) {
           var proxy = art.events.proxy,
@@ -2449,7 +2680,7 @@
           proxy($control, 'click', function () {
             subtitle.toggle = true;
           });
-          art.on('subtitle:toggle', function (value) {
+          art.on('subtitle', function (value) {
             tooltip($control, i18n.get(value ? 'Hide subtitle' : 'Show subtitle'));
           });
         }
@@ -2457,12 +2688,12 @@
     };
   }
 
-  function ownKeys$6(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$7(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-  function _objectSpread$6(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$6(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$6(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$7(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$7(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$7(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
   function time(option) {
     return function (art) {
-      return _objectSpread$6({}, option, {
+      return _objectSpread$7({}, option, {
         mounted: function mounted($control) {
           function getTime() {
             var newTime = "".concat(secondToTime(art.player.currentTime), " / ").concat(secondToTime(art.player.duration));
@@ -2481,18 +2712,22 @@
     };
   }
 
-  function ownKeys$7(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$8(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-  function _objectSpread$7(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$7(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$7(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$8(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$8(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$8(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
   function volume(option) {
     return function (art) {
-      return _objectSpread$7({}, option, {
+      return _objectSpread$8({}, option, {
         mounted: function mounted($control) {
           var proxy = art.events.proxy,
               icons = art.icons,
               player = art.player,
               i18n = art.i18n;
           var isDroging = false;
+          var panelWidth = 60; // 音量条宽度
+
+          var handleWidth = 12; // 音量把手宽度
+
           var $volume = append($control, icons.volume);
           var $volumeClose = append($control, icons.volumeClose);
           var $volumePanel = append($control, '<div class="art-volume-panel"></div>');
@@ -2500,13 +2735,13 @@
           tooltip($volume, i18n.get('Mute'));
           setStyle($volumeClose, 'display', 'none');
 
+          if (art.isMobile) {
+            setStyle($volumePanel, 'display', 'none');
+          }
+
           function volumeChangeFromEvent(event) {
             var _$volumePanel$getBoun = $volumePanel.getBoundingClientRect(),
-                panelLeft = _$volumePanel$getBoun.left,
-                panelWidth = _$volumePanel$getBoun.width;
-
-            var _$volumeHandle$getBou = $volumeHandle.getBoundingClientRect(),
-                handleWidth = _$volumeHandle$getBou.width;
+                panelLeft = _$volumePanel$getBoun.left;
 
             var percentage = clamp(event.pageX - panelLeft - handleWidth / 2, 0, panelWidth - handleWidth / 2) / (panelWidth - handleWidth);
             return percentage;
@@ -2520,9 +2755,6 @@
               setStyle($volumeClose, 'display', 'flex');
               setStyle($volumeHandle, 'left', '0');
             } else {
-              // TODO...
-              var panelWidth = getStyle($volumePanel, 'width') || 60;
-              var handleWidth = getStyle($volumeHandle, 'width');
               var width = (panelWidth - handleWidth) * percentage;
               setStyle($volume, 'display', 'flex');
               setStyle($volumeClose, 'display', 'none');
@@ -2547,7 +2779,7 @@
           proxy($volumeHandle, 'mousedown', function () {
             isDroging = true;
           });
-          proxy(document, 'mousemove', function (event) {
+          proxy($control, 'mousemove', function (event) {
             if (isDroging) {
               player.muted = false;
               player.volume = volumeChangeFromEvent(event);
@@ -2563,12 +2795,12 @@
     };
   }
 
-  function ownKeys$8(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$9(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-  function _objectSpread$8(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$8(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$8(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$9(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$9(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$9(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
   function setting(option) {
     return function (art) {
-      return _objectSpread$8({}, option, {
+      return _objectSpread$9({}, option, {
         tooltip: art.i18n.get('Show setting'),
         mounted: function mounted($control) {
           var proxy = art.events.proxy,
@@ -2579,7 +2811,7 @@
           proxy($control, 'click', function () {
             setting.toggle = true;
           });
-          art.on('setting:toggle', function (value) {
+          art.on('setting', function (value) {
             tooltip($control, i18n.get(value ? 'Hide setting' : 'Show setting'));
           });
         }
@@ -2587,12 +2819,12 @@
     };
   }
 
-  function ownKeys$9(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$a(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-  function _objectSpread$9(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$9(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$9(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$a(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$a(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$a(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
   function thumbnails(option) {
     return function (art) {
-      return _objectSpread$9({}, option, {
+      return _objectSpread$a({}, option, {
         mounted: function mounted($control) {
           var thumbnails = art.option.thumbnails,
               $progress = art.template.$progress,
@@ -2650,12 +2882,12 @@
     };
   }
 
-  function ownKeys$a(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$b(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-  function _objectSpread$a(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$a(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$a(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$b(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$b(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$b(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
   function screenshot(option) {
     return function (art) {
-      return _objectSpread$a({}, option, {
+      return _objectSpread$b({}, option, {
         tooltip: art.i18n.get('Screenshot'),
         mounted: function mounted($control) {
           var proxy = art.events.proxy,
@@ -2670,12 +2902,12 @@
     };
   }
 
-  function ownKeys$b(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$c(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-  function _objectSpread$b(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$b(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$b(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$c(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$c(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$c(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
   function quality(option) {
     return function (art) {
-      return _objectSpread$b({}, option, {
+      return _objectSpread$c({}, option, {
         mounted: function mounted($control) {
           var quality = art.option.quality,
               _art$events = art.events,
@@ -2712,6 +2944,30 @@
     };
   }
 
+  function ownKeys$d(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+  function _objectSpread$d(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$d(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$d(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function loop(option) {
+    return function (art) {
+      return _objectSpread$d({}, option, {
+        mounted: function mounted($control) {
+          var player = art.player;
+          var $left = append($control, "<span class=\"art-loop-point\"></span>");
+          var $right = append($control, "<span class=\"art-loop-point\"></span>");
+          art.on('loop', function (value) {
+            if (value) {
+              setStyle($control, 'display', 'block');
+              setStyle($left, 'left', "calc(".concat(value[0] / player.duration * 100, "% - ").concat($left.clientWidth, "px)"));
+              setStyle($right, 'left', "".concat(value[1] / player.duration * 100, "%"));
+            } else {
+              setStyle($control, 'display', 'none');
+            }
+          });
+        }
+      });
+    };
+  }
+
   var Control =
   /*#__PURE__*/
   function (_Component) {
@@ -2724,8 +2980,18 @@
 
       _this = possibleConstructorReturn(this, getPrototypeOf(Control).call(this, art));
       _this.name = 'control';
-      var option = art.option;
-      art.on('ready', function () {
+      var option = art.option,
+          player = art.player,
+          $player = art.template.$player;
+      _this.delayHide = debounce(function () {
+        if (player.playing && _this.show) {
+          addClass($player, 'art-hide-cursor');
+          removeClass($player, 'art-hover');
+          _this.show = false;
+        }
+      }, 3000);
+      _this.cancelDelayHide = _this.delayHide.clearTimeout;
+      art.once('ready', function () {
         _this.add(progress({
           name: 'progress',
           disable: option.isLive,
@@ -2738,6 +3004,13 @@
           disable: !option.thumbnails.url || option.isLive,
           position: 'top',
           index: 20
+        }));
+
+        _this.add(loop({
+          name: 'loop',
+          disable: false,
+          position: 'top',
+          index: 30
         }));
 
         _this.add(playAndPause({
@@ -2858,14 +3131,14 @@
     return Control;
   }(Component);
 
-  function ownKeys$c(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$e(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-  function _objectSpread$c(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$c(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$c(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$e(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$e(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$e(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
   function playbackRate(option) {
     return function (art) {
       var i18n = art.i18n,
           player = art.player;
-      return _objectSpread$c({}, option, {
+      return _objectSpread$e({}, option, {
         html: "".concat(i18n.get('Play speed'), ":\n                <span data-rate=\"0.5\">0.5</span>\n                <span data-rate=\"0.75\">0.75</span>\n                <span data-rate=\"1.0\" class=\"art-current\">").concat(i18n.get('Normal'), "</span>\n                <span data-rate=\"1.25\">1.25</span>\n                <span data-rate=\"1.5\">1.5</span>\n                <span data-rate=\"2.0\">2.0</span>\n            "),
         click: function click(contextmenu, event) {
           var rate = event.target.dataset.rate;
@@ -2876,7 +3149,7 @@
           }
         },
         mounted: function mounted($menu) {
-          art.on('playbackRateChange', function (rate) {
+          art.on('playbackRate', function (rate) {
             var $current = queryAll('span', $menu).find(function (item) {
               return Number(item.dataset.rate) === rate;
             });
@@ -2890,14 +3163,14 @@
     };
   }
 
-  function ownKeys$d(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$f(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-  function _objectSpread$d(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$d(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$d(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$f(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$f(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$f(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
   function aspectRatio(option) {
     return function (art) {
       var i18n = art.i18n,
           player = art.player;
-      return _objectSpread$d({}, option, {
+      return _objectSpread$f({}, option, {
         html: "".concat(i18n.get('Aspect ratio'), ":\n                <span data-ratio=\"default\" class=\"art-current\">").concat(i18n.get('Default'), "</span>\n                <span data-ratio=\"4:3\">4:3</span>\n                <span data-ratio=\"16:9\">16:9</span>\n            "),
         click: function click(contextmenu, event) {
           var ratio = event.target.dataset.ratio;
@@ -2908,7 +3181,7 @@
           }
         },
         mounted: function mounted($menu) {
-          art.on('aspectRatioChange', function (ratio) {
+          art.on('aspectRatio', function (ratio) {
             var $current = queryAll('span', $menu).find(function (item) {
               return item.dataset.ratio === ratio;
             });
@@ -2922,13 +3195,13 @@
     };
   }
 
-  function ownKeys$e(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$g(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-  function _objectSpread$e(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$e(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$e(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$g(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$g(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$g(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
   function info(option) {
     return function (art) {
-      return _objectSpread$e({}, option, {
+      return _objectSpread$g({}, option, {
         html: art.i18n.get('Video info'),
         click: function click(contextmenu) {
           art.info.show = true;
@@ -2938,23 +3211,46 @@
     };
   }
 
-  function ownKeys$f(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$h(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-  function _objectSpread$f(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$f(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$f(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$h(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$h(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$h(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
   function version(option) {
-    return _objectSpread$f({}, option, {
-      html: '<a href="https://artplayer.org" target="_blank">ArtPlayer 3.3.1</a>'
+    return _objectSpread$h({}, option, {
+      html: '<a href="https://artplayer.org" target="_blank">ArtPlayer 3.5.8</a>'
     });
   }
 
-  function ownKeys$g(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$i(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-  function _objectSpread$g(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$g(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$g(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$i(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$i(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$i(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+  function light(option) {
+    return function (art) {
+      var i18n = art.i18n,
+          player = art.player;
+      return _objectSpread$i({}, option, {
+        html: i18n.get('Light Off'),
+        click: function click(contextmenu) {
+          player.light = !player.light;
+          contextmenu.show = false;
+        },
+        mounted: function mounted($menu) {
+          art.on('light', function (value) {
+            $menu.innerText = i18n.get(value ? 'Light On' : 'Light Off');
+          });
+        }
+      });
+    };
+  }
+
+  function ownKeys$j(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+  function _objectSpread$j(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$j(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$j(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
   function close(option) {
     return function (art) {
-      return _objectSpread$g({}, option, {
+      return _objectSpread$j({}, option, {
         html: art.i18n.get('Close'),
         click: function click(contextmenu) {
           contextmenu.show = false;
@@ -2981,7 +3277,7 @@
           $contextmenu = _art$template.$contextmenu,
           proxy = art.events.proxy;
       _this.$parent = $contextmenu;
-      art.on('ready', function () {
+      art.once('ready', function () {
         _this.add(playbackRate({
           disable: !option.playbackRate,
           name: 'playbackRate',
@@ -3006,10 +3302,16 @@
           index: 40
         }));
 
+        _this.add(light({
+          disable: !option.light,
+          name: 'light',
+          index: 50
+        }));
+
         _this.add(close({
           disable: false,
           name: 'close',
-          index: 50
+          index: 60
         }));
 
         option.contextmenu.forEach(function (item) {
@@ -3098,7 +3400,7 @@
         }, 1000);
       }
 
-      art.on('info:toggle', function (value) {
+      art.on('info', function (value) {
         clearTimeout(timer);
 
         if (value) {
@@ -3123,11 +3425,9 @@
 
       _this = possibleConstructorReturn(this, getPrototypeOf(Subtitle).call(this, art));
       _this.name = 'subtitle';
-      var proxy = art.events.proxy,
-          subtitle = art.option.subtitle,
+      var subtitle = art.option.subtitle,
           $subtitle = art.template.$subtitle;
       setStyles($subtitle, subtitle.style);
-      proxy(_this.textTrack, 'cuechange', _this.update.bind(assertThisInitialized(_this)));
 
       if (subtitle.url) {
         _this.init(subtitle.url);
@@ -3144,9 +3444,9 @@
 
         if (this.activeCue) {
           $subtitle.innerHTML = this.activeCue.text.split(/\r?\n/).map(function (item) {
-            return "<p>".concat(item, "</p>");
+            return "<p>".concat(escape(item), "</p>");
           }).join('');
-          this.art.emit('subtitle:update', this.activeCue.text);
+          this.art.emit('subtitleUpdate', this.activeCue.text);
         }
       }
     }, {
@@ -3162,7 +3462,7 @@
             notice.show = "".concat(i18n.get('Switch subtitle'), ": ").concat(name);
           }
 
-          _this2.art.emit('subtitle:switch', subUrl);
+          _this2.art.emit('subtitleSwitch', subUrl);
 
           return subUrl;
         });
@@ -3174,13 +3474,26 @@
 
         var _this$art2 = this.art,
             notice = _this$art2.notice,
+            proxy = _this$art2.events.proxy,
             _this$art2$template = _this$art2.template,
             $subtitle = _this$art2$template.$subtitle,
+            $video = _this$art2$template.$video,
             $track = _this$art2$template.$track;
+
+        if (!$track) {
+          var _$track = document.createElement('track');
+
+          _$track.default = true;
+          _$track.kind = 'metadata';
+          $video.appendChild(_$track);
+          this.art.template.$track = _$track;
+          proxy(this.textTrack, 'cuechange', this.update.bind(this));
+        }
+
         return fetch(url).then(function (response) {
           return response.text();
         }).then(function (text) {
-          _this3.art.emit('subtitle:load', url);
+          _this3.art.emit('subtitleLoad', url);
 
           switch (ext || getExt(url)) {
             case 'srt':
@@ -3199,13 +3512,10 @@
           $subtitle.innerHTML = '';
           if (_this3.url === subUrl) return subUrl;
           URL.revokeObjectURL(_this3.url);
-          $track.src = subUrl;
+          _this3.art.template.$track.src = subUrl;
           return subUrl;
         }).catch(function (err) {
           notice.show = err;
-
-          _this3.art.emit('subtitle:err', err);
-
           throw err;
         });
       }
@@ -3230,9 +3540,10 @@
   }(Component);
 
   function clickInit(art, events) {
-    var $player = art.template.$player;
+    var controls = art.controls,
+        $player = art.template.$player;
     events.proxy(document, ['click', 'contextmenu'], function (event) {
-      if (event.composedPath().indexOf($player) > -1) {
+      if (event.composedPath && event.composedPath().indexOf($player) > -1) {
         art.isFocus = true;
         art.emit('focus');
       } else {
@@ -3240,16 +3551,25 @@
         art.emit('blur');
       }
     });
+    art.on('blur', function () {
+      controls.delayHide();
+    });
   }
 
   function hoverInit(art, events) {
-    var $player = art.template.$player;
+    var controls = art.controls,
+        $player = art.template.$player;
     events.hover($player, function () {
       addClass($player, 'art-hover');
-      art.emit('hoverenter');
+      art.emit('hover', true);
     }, function () {
       removeClass($player, 'art-hover');
-      art.emit('hoverleave');
+      art.emit('hover');
+    });
+    art.on('hover', function (value) {
+      if (!value) {
+        controls.delayHide();
+      }
     });
   }
 
@@ -3259,64 +3579,85 @@
         $video = _art$template.$video,
         player = art.player,
         controls = art.controls;
-    var autoHide = debounce(function () {
-      addClass($player, 'art-hide-cursor');
-      removeClass($player, 'art-hover');
-      controls.show = false;
-    }, 3000);
-    art.on('hoverleave', function () {
-      if (player.playing) {
-        autoHide();
-      }
-    });
     events.proxy($player, 'mousemove', function (event) {
-      autoHide.clearTimeout();
+      art.emit('mousemove', event);
+    });
+    art.on('mousemove', function (event) {
+      controls.cancelDelayHide();
       removeClass($player, 'art-hide-cursor');
       controls.show = true;
 
-      if (!player.pip && player.playing && event.target === $video) {
-        autoHide();
+      if (!player.pip && event.target === $video) {
+        controls.delayHide();
       }
-
-      art.emit('mousemove');
     });
   }
 
   function resizeInit(art, events) {
     var option = art.option,
-        player = art.player,
-        $player = art.template.$player;
-    var object = document.createElement('object');
-    object.setAttribute('aria-hidden', 'true');
-    object.setAttribute('tabindex', -1);
-    object.type = 'text/html';
-    object.data = 'about:blank';
-    var playerWidth = player.width;
-    var playerHeight = player.height;
+        player = art.player;
     var resizeFn = throttle(function () {
-      if (player.width !== playerWidth || player.height !== playerHeight) {
-        playerWidth = player.width;
-        playerHeight = player.height;
+      if (player.normal) {
+        player.autoSize = option.autoSize;
+      }
 
-        if (option.autoSize) {
-          if (!player.fullscreen && !player.fullscreenWeb && !player.pip) {
-            player.autoSize = true;
-          } else {
-            player.autoSize = false;
-          }
+      player.aspectRatioReset = true;
+      art.emit('resize');
+    }, 500);
+    events.proxy(window, ['orientationchange', 'resize'], function () {
+      resizeFn();
+    });
+  }
+
+  function gestureInit(art, events) {
+    if (art.isMobile && !art.option.isLive) {
+      var player = art.player,
+          notice = art.notice,
+          $video = art.template.$video;
+      var isDroging = false;
+      var startX = 0;
+      var currentTime = 0;
+      events.proxy($video, 'touchstart', function (event) {
+        if (event.touches.length === 1) {
+          isDroging = true;
+          startX = event.touches[0].clientX;
+        }
+      });
+      events.proxy(document, 'touchmove', function (event) {
+        if (event.touches.length === 1 && isDroging) {
+          var widthDiff = event.touches[0].clientX - startX;
+          var proportion = clamp(widthDiff / $video.clientWidth, -1, 1);
+          currentTime = clamp(player.currentTime + 60 * proportion, 0, player.duration);
+          notice.show = "".concat(secondToTime(currentTime), " / ").concat(secondToTime(player.duration));
+        }
+      });
+      events.proxy(document, 'touchend', function () {
+        if (isDroging && currentTime) {
+          player.seek = currentTime;
         }
 
-        player.aspectRatioReset = true;
-        art.emit('resize', {
-          width: player.width,
-          height: player.height
-        });
-      }
-    }, 500);
-    events.proxy(object, 'load', function () {
-      events.proxy(object.contentDocument.defaultView, 'resize', resizeFn);
+        isDroging = false;
+        startX = 0;
+        currentTime = 0;
+      });
+    }
+  }
+
+  function viewInit(art, events) {
+    var player = art.player,
+        autoMini = art.option.autoMini,
+        $container = art.template.$container;
+    var scrollFn = debounce(function () {
+      art.emit('view', isInViewport($container));
+    }, 200);
+    events.proxy(window, 'scroll', function () {
+      scrollFn();
     });
-    $player.appendChild(object);
+    art.on('view', function (state) {
+      if (autoMini) {
+        player.mini = !state;
+      }
+    });
   }
 
   var Events =
@@ -3333,11 +3674,13 @@
       this.loadImg = this.loadImg.bind(this);
 
       if (art.whitelist.state) {
-        art.on('ready', function () {
+        art.once('ready', function () {
           clickInit(art, _this);
           hoverInit(art, _this);
           mousemoveInitInit(art, _this);
           resizeInit(art, _this);
+          gestureInit(art, _this);
+          viewInit(art, _this);
         });
       }
     }
@@ -3433,7 +3776,7 @@
           proxy = art.events.proxy;
 
       if (option.hotkey) {
-        art.on('ready', function () {
+        art.once('ready', function () {
           _this.add(27, function () {
             if (player.fullscreenWeb) {
               player.fullscreenWeb = false;
@@ -3445,7 +3788,7 @@
           });
 
           _this.add(37, function () {
-            player.seek = player.currentTime - 5;
+            player.backward = 5;
           });
 
           _this.add(38, function () {
@@ -3453,7 +3796,7 @@
           });
 
           _this.add(39, function () {
-            player.seek = player.currentTime + 5;
+            player.forward = 5;
           });
 
           _this.add(40, function () {
@@ -3509,7 +3852,7 @@
       _this = possibleConstructorReturn(this, getPrototypeOf(Layer).call(this, art));
       _this.name = 'layer';
       _this.$parent = art.template.$layer;
-      art.on('ready', function () {
+      art.once('ready', function () {
         art.option.layers.forEach(function (item) {
           _this.add(item);
         });
@@ -3612,16 +3955,16 @@
 
   var pip$1 = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 36 36\" height=\"32\" width=\"32\">\n    <path d=\"M25,17 L17,17 L17,23 L25,23 L25,17 L25,17 Z M29,25 L29,10.98 C29,9.88 28.1,9 27,9 L9,9 C7.9,9 7,9.88 7,10.98 L7,25 C7,26.1 7.9,27 9,27 L27,27 C28.1,27 29,26.1 29,25 L29,25 Z M27,25.02 L9,25.02 L9,10.97 L27,10.97 L27,25.02 L27,25.02 Z\"></path>\n</svg>";
 
-  function ownKeys$h(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$k(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-  function _objectSpread$h(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$h(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$h(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$k(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$k(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$k(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
   var Icons = function Icons(art) {
     var _this = this;
 
     classCallCheck(this, Icons);
 
-    var icons = _objectSpread$h({
+    var icons = _objectSpread$k({
       loading: loading,
       state: state,
       play: play,
@@ -3645,14 +3988,14 @@
     });
   };
 
-  function ownKeys$i(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$l(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-  function _objectSpread$i(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$i(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$i(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$l(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$l(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$l(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
   function flip(option) {
     return function (art) {
       var i18n = art.i18n,
           player = art.player;
-      return _objectSpread$i({}, option, {
+      return _objectSpread$l({}, option, {
         html: "\n                <div class=\"art-setting-header\">".concat(i18n.get('Flip'), "</div>\n                <div class=\"art-setting-radio\">\n                    <div class=\"art-radio-item current\">\n                        <button type=\"button\" data-value=\"normal\">").concat(i18n.get('Normal'), "</button>\n                    </div>\n                    <div class=\"art-radio-item\">\n                        <button type=\"button\" data-value=\"horizontal\">").concat(i18n.get('Horizontal'), "</button>\n                    </div>\n                    <div class=\"art-radio-item\">\n                        <button type=\"button\" data-value=\"vertical\">").concat(i18n.get('Vertical'), "</button>\n                    </div>\n                </div>\n            "),
         click: function click(setting, event) {
           var value = event.target.dataset.value;
@@ -3662,7 +4005,7 @@
           }
         },
         mounted: function mounted($setting) {
-          art.on('flipChange', function (flip) {
+          art.on('flip', function (flip) {
             var $current = queryAll('button', $setting).find(function (item) {
               return item.dataset.value === flip;
             });
@@ -3676,14 +4019,14 @@
     };
   }
 
-  function ownKeys$j(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$m(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-  function _objectSpread$j(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$j(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$j(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$m(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$m(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$m(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
   function aspectRatio$1(option) {
     return function (art) {
       var i18n = art.i18n,
           player = art.player;
-      return _objectSpread$j({}, option, {
+      return _objectSpread$m({}, option, {
         html: "\n                <div class=\"art-setting-header\">".concat(i18n.get('Aspect ratio'), "</div>\n                <div class=\"art-setting-radio\">\n                    <div class=\"art-radio-item current\">\n                        <button type=\"button\" data-value=\"default\">").concat(i18n.get('Default'), "</button>\n                    </div>\n                    <div class=\"art-radio-item\">\n                        <button type=\"button\" data-value=\"4:3\">4:3</button>\n                    </div>\n                    <div class=\"art-radio-item\">\n                        <button type=\"button\" data-value=\"16:9\">16:9</button>\n                    </div>\n                </div>\n            "),
         click: function click(setting, event) {
           var value = event.target.dataset.value;
@@ -3693,7 +4036,7 @@
           }
         },
         mounted: function mounted($setting) {
-          art.on('aspectRatioChange', function (ratio) {
+          art.on('aspectRatio', function (ratio) {
             var $current = queryAll('button', $setting).find(function (item) {
               return item.dataset.value === ratio;
             });
@@ -3707,15 +4050,15 @@
     };
   }
 
-  function ownKeys$k(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+  function ownKeys$n(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-  function _objectSpread$k(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$k(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$k(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread$n(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$n(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$n(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
   function playbackRate$1(option) {
     return function (art) {
       var i18n = art.i18n,
           player = art.player,
           proxy = art.events.proxy;
-      return _objectSpread$k({}, option, {
+      return _objectSpread$n({}, option, {
         html: "\n                <div class=\"art-setting-header\">\n                    ".concat(i18n.get('Play speed'), ": <span class=\"art-subtitle-value\">1.0</span>x\n                </div>\n                <div class=\"art-setting-range\">\n                    <input class=\"art-subtitle-range\" value=\"1\" type=\"range\" min=\"0.5\" max=\"2\" step=\"0.25\">\n                </div>\n            "),
         mounted: function mounted($setting) {
           var $range = query('.art-setting-range input', $setting);
@@ -3725,8 +4068,8 @@
             $value.innerText = value;
             player.playbackRate = Number(value);
           });
-          art.on('playbackRateChange', function (rate) {
-            if ($range.value !== rate) {
+          art.on('playbackRate', function (rate) {
+            if (rate && $range.value !== rate) {
               $range.value = rate;
               $value.innerText = rate;
             }
@@ -3756,7 +4099,7 @@
       _this.$parent = $settingBody;
 
       if (option.setting) {
-        art.on('ready', function () {
+        art.once('ready', function () {
           proxy($setting, 'click', function (e) {
             if (e.target === $setting) {
               _this.show = false;
@@ -3802,7 +4145,7 @@
       key: "get",
       value: function get(key) {
         var storage = JSON.parse(localStorage.getItem(this.name)) || {};
-        return key ? storage[key] : {};
+        return key ? storage[key] : storage;
       }
     }, {
       key: "set",
@@ -3948,7 +4291,7 @@
       });
     }
 
-    art.on('ready', function () {
+    art.once('ready', function () {
       setting.add({
         title: 'Local Video',
         name: 'localVideo',
@@ -4008,7 +4351,7 @@
       });
     }
 
-    art.on('ready', function () {
+    art.once('ready', function () {
       setting.add({
         title: 'Local Subtitle',
         name: 'localSubtitle',
@@ -4047,7 +4390,7 @@
         background: theme
       },
       mounted: function mounted($progressBar) {
-        art.on('control:toggle', function (value) {
+        art.on('control', function (value) {
           $progressBar.style.display = value ? 'none' : 'block';
         });
         art.on('destroy', function () {
@@ -4162,21 +4505,11 @@
       value: function add(plugin) {
         this.id += 1;
         var result = plugin.call(this, this.art);
-        var pluginName = '';
-
-        if (result && result.name) {
-          pluginName = result.name;
-        } else if (plugin.name) {
-          pluginName = plugin.name;
-        } else {
-          pluginName = "plugin".concat(this.id);
-        }
-
+        var pluginName = result && result.name || plugin.name || "plugin".concat(this.id);
         errorHandle(!has(this, pluginName), "Cannot add a plugin that already has the same name: ".concat(pluginName));
-        Object.defineProperty(this, pluginName, {
+        def(this, pluginName, {
           value: result
         });
-        this.art.emit('plugin:add', plugin);
         return this;
       }
     }]);
@@ -4224,11 +4557,12 @@
       art.emit('customType', typeName);
     } else {
       $video.src = option.url;
-      art.emit('urlChange', $video.src);
+      art.emit('url', $video.src);
     }
   };
 
   var id = 0;
+  var instances = [];
 
   var Artplayer =
   /*#__PURE__*/
@@ -4244,6 +4578,9 @@
       _this.option = optionValidator(mergeDeep(Artplayer.option, option), scheme);
       _this.isFocus = false;
       _this.isDestroy = false;
+      _this.userAgent = userAgent;
+      _this.isMobile = isMobile;
+      _this.isWechat = isWechat;
       _this.whitelist = new Whitelist(assertThisInitialized(_this));
       _this.template = new Template(assertThisInitialized(_this));
       _this.events = new Events(assertThisInitialized(_this));
@@ -4270,7 +4607,7 @@
 
       id += 1;
       _this.id = id;
-      Artplayer.instances.push(assertThisInitialized(_this));
+      instances.push(assertThisInitialized(_this));
       return _this;
     }
 
@@ -4280,14 +4617,19 @@
         var removeHtml = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
         this.events.destroy();
         this.template.destroy(removeHtml);
-        Artplayer.instances.splice(Artplayer.instances.indexOf(this), 1);
+        instances.splice(instances.indexOf(this), 1);
         this.isDestroy = true;
         this.emit('destroy');
       }
     }], [{
+      key: "instances",
+      get: function get() {
+        return instances;
+      }
+    }, {
       key: "version",
       get: function get() {
-        return '3.3.1';
+        return '3.5.8';
       }
     }, {
       key: "env",
@@ -4338,6 +4680,7 @@
           muted: false,
           autoplay: false,
           autoSize: false,
+          autoMin: false,
           loop: false,
           flip: false,
           playbackRate: false,
@@ -4347,6 +4690,7 @@
           hotkey: true,
           pip: false,
           mutex: true,
+          light: false,
           backdrop: true,
           fullscreen: false,
           fullscreenWeb: false,
@@ -4354,12 +4698,11 @@
           miniProgressBar: false,
           localVideo: false,
           localSubtitle: false,
-          autoPip: false,
           networkMonitor: false,
           layers: [],
           contextmenu: [],
-          quality: [],
           controls: [],
+          quality: [],
           highlight: [],
           plugins: [],
           whitelist: [],
@@ -4376,7 +4719,7 @@
           },
           moreVideoAttr: {
             controls: false,
-            preload: 'metadata'
+            preload: isSafari ? 'auto' : 'metadata'
           },
           icons: {},
           customType: {},
@@ -4386,13 +4729,8 @@
     }]);
 
     return Artplayer;
-  }(Emitter);
-
-  Object.defineProperty(Artplayer, 'instances', {
-    value: []
-  }); // eslint-disable-next-line no-console
-
-  console.log('%c ArtPlayer %c 3.3.1 %c https://artplayer.org', 'color: #fff; background: #5f5f5f', 'color: #fff; background: #4bc729', '');
+  }(Emitter); // eslint-disable-next-line no-console
+  console.log('%c ArtPlayer %c 3.5.8 %c https://artplayer.org', 'color: #fff; background: #5f5f5f', 'color: #fff; background: #4bc729', '');
 
   return Artplayer;
 

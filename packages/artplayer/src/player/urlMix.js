@@ -16,13 +16,15 @@ export default function urlMix(art, player) {
             if (typeName && typeCallback) {
                 sleep().then(() => {
                     art.loading.show = true;
-                    typeCallback.call(art, $video, url, art);
-                    art.emit('customType', typeName);
+                    const result = typeCallback.call(art, $video, url, art);
+                    def(art, typeName, {
+                        value: result,
+                    });
                 });
             } else {
                 $video.src = url;
                 art.option.url = url;
-                art.emit('urlChange', url);
+                art.emit('url', url);
             }
         },
     });

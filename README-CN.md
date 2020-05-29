@@ -14,7 +14,7 @@
 
 ## Features
 
--   <b>大小</b> - `artplayer.js` ≈ `90kb` and `artplayer.css` ≈ `20kb`
+-   <b>大小</b> - 缩小并压缩后的大小只有`25kb`
 -   <b>字幕</b> - 支持 `.VTT`, `.ASS` 和 `.SRT` 格式
 -   <b>自定义</b> - `右键菜单`, `业务图层`, `视频控制器` 和 `设置面板`
 -   <b>控制器</b> - `画质切换`, `字幕切换`, `播放速度`, `长宽比`, `视频翻转`, `全屏`, `画中画`, `截图`, `缩略图`, `自适应尺寸`, `高亮` 和 `热键`...
@@ -41,6 +41,10 @@
 
 [打开 Github Pages 演示](https://artplayer.org/)
 
+## 手机端演示
+
+![mobile](./images/mobile.png)
+
 ## 文档
 
 [打开 Github Pages 文档](https://artplayer.org/document)
@@ -61,14 +65,18 @@ $ yarn add artplayer
 
 ```js
 import Artplayer from 'artplayer';
-import 'artplayer/dist/artplayer.css';
 ```
 
 或者直接引入`umd`文件：
 
 ```html
-<link rel="stylesheet" href="path/to/artplayer.css" />
 <script src="path/to/artplayer.js"></script>
+```
+
+或者从 jsDelivr CDN 引入:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/artplayer/dist/artplayer.js"></script>
 ```
 
 将会导出全局变量到`window.Artplayer`.
@@ -111,6 +119,7 @@ $ npm start
 
 我们通过这些渠道接受捐赠：
 
+-   [Patreon](https://www.patreon.com/artplayer)
 -   [Paypal](https://www.paypal.me/harveyzack)
 -   [微信支付](./images/wechatpay.jpg)
 -   [支付宝](./images/alipay.jpg)

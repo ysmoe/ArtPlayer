@@ -4,6 +4,7 @@ import playbackRate from './playbackRate';
 import aspectRatio from './aspectRatio';
 import info from './info';
 import version from './version';
+import light from './light';
 import close from './close';
 
 export default class Contextmenu extends Component {
@@ -20,7 +21,7 @@ export default class Contextmenu extends Component {
 
         this.$parent = $contextmenu;
 
-        art.on('ready', () => {
+        art.once('ready', () => {
             this.add(
                 playbackRate({
                     disable: !option.playbackRate,
@@ -54,10 +55,18 @@ export default class Contextmenu extends Component {
             );
 
             this.add(
+                light({
+                    disable: !option.light,
+                    name: 'light',
+                    index: 50,
+                }),
+            );
+
+            this.add(
                 close({
                     disable: false,
                     name: 'close',
-                    index: 50,
+                    index: 60,
                 }),
             );
 

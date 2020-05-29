@@ -3,7 +3,7 @@
         display: none;
         position: absolute;
         z-index: 20;
-        bottom: 40px;
+        bottom: 10px;
         width: 100%;
         padding: 0 20px;
         text-align: center;
@@ -13,6 +13,8 @@
         text-shadow: 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.5);
 
         p {
+            word-break: break-all;
+            height: fit-content;
             margin: 5px 0;
         }
     }
@@ -20,6 +22,12 @@
     &.art-subtitle-show {
         .art-subtitle {
             display: block;
+        }
+    }
+
+    &.art-control-show {
+        .art-subtitle {
+            bottom: 40px;
         }
     }
 }

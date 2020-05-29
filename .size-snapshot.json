@@ -1,13 +1,13 @@
 {
   "packages/artplayer/dist/artplayer.js": {
-    "bundled": 157780,
-    "minified": 84601,
-    "gzipped": 21078
+    "bundled": 188980,
+    "minified": 109528,
+    "gzipped": 25960
   },
   "packages/artplayer-plugin-backlight/dist/artplayer-plugin-backlight.js": {
-    "bundled": 4642,
-    "minified": 1999,
-    "gzipped": 961
+    "bundled": 4629,
+    "minified": 1985,
+    "gzipped": 955
   },
   "packages/artplayer-tool-github/dist/artplayer-tool-github.js": {
     "bundled": 12660,
@@ -15,9 +15,9 @@
     "gzipped": 4310
   },
   "packages/artplayer-plugin-gif/dist/artplayer-plugin-gif.js": {
-    "bundled": 98490,
-    "minified": 28855,
-    "gzipped": 10441
+    "bundled": 98474,
+    "minified": 28839,
+    "gzipped": 10437
   },
   "packages/artplayer-tool-thumbnail/dist/artplayer-tool-thumbnail.js": {
     "bundled": 16311,
@@ -25,18 +25,18 @@
     "gzipped": 2827
   },
   "packages/artplayer-plugin-danmuku/dist/artplayer-plugin-danmuku.js": {
-    "bundled": 23563,
-    "minified": 12561,
-    "gzipped": 4083
+    "bundled": 24145,
+    "minified": 12797,
+    "gzipped": 4160
   },
   "packages/artplayer-vue/dist/artplayer-vue.js": {
-    "bundled": 159339,
-    "minified": 85527,
-    "gzipped": 21228
+    "bundled": 190523,
+    "minified": 110435,
+    "gzipped": 26102
   },
   "packages/artplayer-react/dist/artplayer-react.js": {
-    "bundled": 241268,
-    "minified": 114057,
-    "gzipped": 30126
+    "bundled": 273906,
+    "minified": 139567,
+    "gzipped": 35352
   }
 }

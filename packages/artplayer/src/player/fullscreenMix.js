@@ -9,21 +9,20 @@ export default function fullscreenMix(art, player) {
             return screenfull.isFullscreen;
         },
         set(value) {
-            if (player.fullscreenWeb) {
-                player.fullscreenWeb = false;
-            }
-
             if (value) {
                 screenfull.request($player).then(() => {
                     addClass($player, 'art-fullscreen');
                     player.aspectRatioReset = true;
-                    art.emit('fullscreenChange', true);
+                    art.emit('resize');
+                    art.emit('fullscreen', true);
                 });
             } else {
                 screenfull.exit().then(() => {
                     removeClass($player, 'art-fullscreen');
                     player.aspectRatioReset = true;
-                    art.emit('fullscreenChange', false);
+                    player.autoSize = art.option.autoSize;
+                    art.emit('resize');
+                    art.emit('fullscreen');
                 });
             }
         },

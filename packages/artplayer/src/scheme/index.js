@@ -7,6 +7,17 @@ function validElement(value, type, paths) {
     );
 }
 
+const component = {
+    html: validElement,
+    disable: 'boolean|undefined',
+    name: 'string|undefined',
+    index: 'number|undefined',
+    style: 'object|undefined',
+    click: 'function|undefined',
+    mounted: 'function|undefined',
+    tooltip: 'string|undefined',
+};
+
 export default {
     container: validElement,
     url: 'string',
@@ -19,6 +30,7 @@ export default {
     muted: 'boolean',
     autoplay: 'boolean',
     autoSize: 'boolean',
+    autoMin: 'boolean',
     loop: 'boolean',
     flip: 'boolean',
     playbackRate: 'boolean',
@@ -28,6 +40,7 @@ export default {
     hotkey: 'boolean',
     pip: 'boolean',
     mutex: 'boolean',
+    light: 'boolean',
     backdrop: 'boolean',
     fullscreen: 'boolean',
     fullscreenWeb: 'boolean',
@@ -38,47 +51,11 @@ export default {
     networkMonitor: 'boolean',
     plugins: ['function'],
     whitelist: ['string|function|regexp'],
-    layers: [
-        {
-            disable: 'boolean|undefined',
-            name: 'string|undefined',
-            index: 'number|undefined',
-            html: validElement,
-            style: 'object|undefined',
-            click: 'function|undefined',
-            mounted: 'function|undefined',
-            tooltip: 'string|undefined',
-        },
-    ],
-    contextmenu: [
-        {
-            disable: 'boolean|undefined',
-            name: 'string|undefined',
-            index: 'number|undefined',
-            html: validElement,
-            style: 'object|undefined',
-            click: 'function|undefined',
-            mounted: 'function|undefined',
-            tooltip: 'string|undefined',
-        },
-    ],
-    quality: [
-        {
-            default: 'boolean|undefined',
-            name: 'string',
-            url: 'string',
-        },
-    ],
+    layers: [component],
+    contextmenu: [component],
     controls: [
         {
-            disable: 'boolean|undefined',
-            name: 'string|undefined',
-            index: 'number|undefined',
-            html: validElement,
-            style: 'object|undefined',
-            click: 'function|undefined',
-            mounted: 'function|undefined',
-            tooltip: 'string|undefined',
+            ...component,
             position: (value, type, paths) => {
                 const position = ['top', 'left', 'right'];
                 return errorHandle(
@@ -86,6 +63,13 @@ export default {
                     `${paths.join('.')} only accept ${position.toString()} as parameters`,
                 );
             },
+        },
+    ],
+    quality: [
+        {
+            default: 'boolean|undefined',
+            name: 'string',
+            url: 'string',
         },
     ],
     highlight: [

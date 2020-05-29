@@ -1,15 +1,15 @@
-var url = 'https://zhw2590582.github.io/assets-cdn';
 var art = new Artplayer({
     container: '.artplayer-app',
-    url: url + '/video/one-more-time-one-more-chance-480p.mp4',
+    url: '/assets/sample/video.mp4',
     title: 'One More Time One More Chance',
-    poster: url + '/image/one-more-time-one-more-chance-poster.jpg',
+    poster: '/assets/sample/poster.jpg',
     volume: 0.5,
     isLive: false,
     muted: false,
     autoplay: false,
     pip: true,
     autoSize: true,
+    autoMini: true,
     screenshot: true,
     setting: true,
     loop: true,
@@ -23,8 +23,8 @@ var art = new Artplayer({
     localVideo: true,
     localSubtitle: true,
     networkMonitor: false,
-    autoPip: true,
     mutex: true,
+    light: true,
     backdrop: true,
     theme: '#ffad00',
     lang: navigator.language.toLowerCase(),
@@ -34,7 +34,7 @@ var art = new Artplayer({
     contextmenu: [
         {
             html: 'Custom menu',
-            click: function(contextmenu) {
+            click: function (contextmenu) {
                 console.info('You clicked on the custom menu');
                 contextmenu.show = false;
             },
@@ -42,8 +42,8 @@ var art = new Artplayer({
     ],
     layers: [
         {
-            html: `<img style="width: 100px" src="${url}/image/your-name.png">`,
-            click: function() {
+            html: `<img style="width: 100px" src="/assets/sample/layer.png">`,
+            click: function () {
                 console.info('You clicked on the custom layer');
             },
             style: {
@@ -58,22 +58,22 @@ var art = new Artplayer({
         {
             default: true,
             name: 'SD 480P',
-            url: url + '/video/one-more-time-one-more-chance-480p.mp4',
+            url: '/assets/sample/video.mp4',
         },
         {
             name: 'HD 720P',
-            url: url + '/video/one-more-time-one-more-chance-720p.mp4',
+            url: '/assets/sample/video.mp4',
         },
     ],
     thumbnails: {
-        url: url + '/image/one-more-time-one-more-chance-thumbnails.png',
+        url: '/assets/sample/thumbnails.png',
         number: 100,
         width: 160,
         height: 90,
         column: 10,
     },
     subtitle: {
-        url: url + '/subtitle/one-more-time-one-more-chance.srt',
+        url: '/assets/sample/subtitle.srt',
         style: {
             color: '#03A9F4',
         },
@@ -104,7 +104,7 @@ var art = new Artplayer({
         {
             position: 'right',
             html: 'Control',
-            click: function() {
+            click: function () {
                 console.info('You clicked on the custom control');
             },
         },

@@ -12,7 +12,7 @@ export default class Template {
         }
 
         errorHandle(
-            art.constructor.instances.every(art => art.template.$container !== this.$container),
+            art.constructor.instances.every((art) => art.template.$container !== this.$container),
             'Cannot mount multiple instances on the same dom element',
         );
 
@@ -35,10 +35,9 @@ export default class Template {
     desktop() {
         const { theme, backdrop } = this.art.option;
         this.$container.innerHTML = `
+          <div class="art-undercover"></div>
           <div class="art-video-player art-subtitle-show art-layer-show" style="--theme: ${theme}">
-            <video class="art-video">
-              <track default kind="metadata"></track>
-            </video>
+            <video class="art-video"></video>
             <div class="art-subtitle"></div>
             <div class="art-danmuku"></div>
             <div class="art-layers"></div>
@@ -92,16 +91,17 @@ export default class Template {
               </div>
               <div class="art-info-close">[x]</div>
             </div>
-            <div class="art-pip-header">
-              <div class="art-pip-title"></div>
-              <div class="art-pip-close">×</div>
+            <div class="art-mini-header">
+              <div class="art-mini-title"></div>
+              <div class="art-mini-close">×</div>
             </div>
             <div class="art-contextmenus"></div>
           </div>
         `;
+
+        this.$undercover = this.query('.art-undercover');
         this.$player = this.query('.art-video-player');
         this.$video = this.query('.art-video');
-        this.$track = this.query('.art-video track');
         this.$subtitle = this.query('.art-subtitle');
         this.$danmuku = this.query('.art-danmuku');
         this.$bottom = this.query('.art-bottom');
@@ -121,15 +121,19 @@ export default class Template {
         this.$info = this.query('.art-info');
         this.$infoPanel = this.query('.art-info-panel');
         this.$infoClose = this.query('.art-info-close');
-        this.$pipHeader = this.query('.art-pip-header');
-        this.$pipTitle = this.query('.art-pip-title');
-        this.$pipClose = this.query('.art-pip-close');
+        this.$miniHeader = this.query('.art-mini-header');
+        this.$miniTitle = this.query('.art-mini-title');
+        this.$miniClose = this.query('.art-mini-close');
         this.$contextmenu = this.query('.art-contextmenus');
 
         if (backdrop) {
             addClass(this.$settingInner, 'art-backdrop-filter');
             addClass(this.$info, 'art-backdrop-filter');
             addClass(this.$contextmenu, 'art-backdrop-filter');
+        }
+
+        if (this.art.isMobile) {
+            addClass(this.$container, 'art-mobile');
         }
     }
 

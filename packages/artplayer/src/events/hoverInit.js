@@ -1,16 +1,26 @@
 import { addClass, removeClass } from '../utils';
 
 export default function hoverInit(art, events) {
-    const { $player } = art.template;
+    const {
+        controls,
+        template: { $player },
+    } = art;
+
     events.hover(
         $player,
         () => {
             addClass($player, 'art-hover');
-            art.emit('hoverenter');
+            art.emit('hover', true);
         },
         () => {
             removeClass($player, 'art-hover');
-            art.emit('hoverleave');
+            art.emit('hover');
         },
     );
+
+    art.on('hover', (value) => {
+        if (!value) {
+            controls.delayHide();
+        }
+    });
 }

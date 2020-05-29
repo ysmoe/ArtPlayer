@@ -247,14 +247,14 @@
       case 1:
       case 2:
       case 3:
-        return 'scroll';
+        return 0;
 
       case 4:
       case 5:
-        return 'static';
+        return 1;
 
       default:
-        return null;
+        return 0;
     }
   }
   function bilibiliDanmuParseFromXml(xmlString) {
@@ -407,7 +407,7 @@
 
   function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-  function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+  function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
   var Danmuku =
   /*#__PURE__*/
@@ -427,6 +427,7 @@
       this.option = {};
       this.config(option);
       this.isStop = false;
+      this.isHide = false;
       this.animationFrameTimer = null;
       this.$danmuku = art.template.$danmuku;
       art.on('video:play', this.start.bind(this));
@@ -476,7 +477,7 @@
           danmu.$lastStartTime = Date.now();
 
           switch (danmu.mode) {
-            case 'scroll':
+            case 0:
               danmu.$ref.style.transform = "translateX(".concat(-danmu.$restWidth, "px) translateY(0px) translateZ(0px)");
               danmu.$ref.style.transition = "transform ".concat(danmu.$restTime, "s linear 0s");
               break;
@@ -491,7 +492,7 @@
           danmu.$state = 'stop';
 
           switch (danmu.mode) {
-            case 'scroll':
+            case 0:
               {
                 var _getRect = getRect($player),
                     playerLeft = _getRect.left,
@@ -532,7 +533,7 @@
             player = _this$art.player,
             $player = _this$art.template.$player;
         this.animationFrameTimer = window.requestAnimationFrame(function () {
-          if (player.playing) {
+          if (player.playing && !_this2.isHide) {
             var danmuLeft = getRect($player, 'width');
             filter(_this2.queue, 'emit', function (danmu) {
               danmu.$restTime -= (Date.now() - danmu.$lastStartTime) / 1000;
@@ -558,8 +559,8 @@
               danmu.$ref.style.opacity = _this2.option.opacity;
               danmu.$ref.style.fontSize = "".concat(_this2.option.fontSize, "px");
               danmu.$ref.innerText = danmu.text;
-              danmu.$ref.style.color = danmu.color;
-              danmu.$ref.style.border = danmu.border ? "1px solid ".concat(danmu.color) : 'none';
+              danmu.$ref.style.color = danmu.color || '#fff';
+              danmu.$ref.style.border = danmu.border ? "1px solid ".concat(danmu.color || '#fff') : 'none';
               danmu.$restTime = _this2.option.synchronousPlayback && player.playbackRate ? _this2.option.speed / Number(player.playbackRate) : _this2.option.speed;
               danmu.$lastStartTime = Date.now();
               var danmuWidth = getRect(danmu.$ref, 'width');
@@ -567,7 +568,7 @@
               danmu.$state = 'emit';
 
               switch (danmu.mode) {
-                case 'scroll':
+                case 0:
                   {
                     danmu.$restWidth = danmuLeft + danmuWidth + 5;
                     danmu.$ref.style.left = "".concat(danmuLeft, "px");
@@ -577,7 +578,7 @@
                     break;
                   }
 
-                case 'static':
+                case 1:
                   danmu.$ref.style.top = "".concat(danmuTop, "px");
                   danmu.$ref.style.left = '50%';
                   danmu.$ref.style.marginLeft = "-".concat(danmuWidth / 2, "px");
@@ -610,13 +611,15 @@
     }, {
       key: "show",
       value: function show() {
-        this.$danmuku.style = 'block';
+        this.isHide = false;
+        this.$danmuku.style.display = 'block';
         this.art.emit('artplayerPluginDanmuku:show');
       }
     }, {
       key: "hide",
       value: function hide() {
-        this.$danmuku.style = 'none';
+        this.isHide = true;
+        this.$danmuku.style.display = 'none';
         this.art.emit('artplayerPluginDanmuku:hide');
       }
     }, {
@@ -626,6 +629,16 @@
             notice = _this$art2.notice,
             player = _this$art2.player,
             i18n = _this$art2.i18n;
+        var _this$art$constructor2 = this.art.constructor,
+            clamp = _this$art$constructor2.utils.clamp,
+            validator = _this$art$constructor2.validator;
+        validator(danmu, {
+          text: 'string',
+          mode: 'number|undefined',
+          color: 'string|undefined',
+          time: 'number|undefined',
+          border: 'boolean|undefined'
+        });
 
         if (!danmu.text.trim()) {
           notice.show = i18n.get('Danmu text cannot be empty');
@@ -637,12 +650,14 @@
           return;
         }
 
-        if (typeof danmu.time !== 'number') {
-          danmu.time = player.currentTime;
+        if (danmu.time) {
+          danmu.time = clamp(danmu.time, 0, Infinity);
+        } else {
+          danmu.time = player.currentTime + 0.5;
         }
 
         this.queue.push(_objectSpread({
-          mode: 'scroll'
+          mode: 0
         }, danmu, {
           $state: 'wait',
           $ref: null,
@@ -690,7 +705,12 @@
         emit: danmuku.emit.bind(danmuku),
         config: danmuku.config.bind(danmuku),
         hide: danmuku.hide.bind(danmuku),
-        show: danmuku.show.bind(danmuku)
+        show: danmuku.show.bind(danmuku),
+
+        get isHide() {
+          return danmuku.isHide;
+        }
+
       };
     };
   }

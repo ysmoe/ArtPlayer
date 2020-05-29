@@ -16,7 +16,7 @@
 
 ## Features
 
--   <b>Size</b> - `artplayer.js` ≈ `90kb` and `artplayer.css` ≈ `20kb`
+-   <b>Size</b> - `25kB` minified and gzipped
 -   <b>Subtitle</b> - Support for `.VTT`, `.ASS` and `.SRT` formats
 -   <b>Customizable</b> - `Right Click Menu`, `Business Layer`, `Video Controller` and `Settings Panel`
 -   <b>Controller</b> - `Quality Switch`, `Subtitle Switch`, `Play Speed`, `Aspect Ratio`, `Video Flip`, `Fullscreen`, `Picture In Picture`, `Screenshot`, `Thumbnail`, `Adaptive Size`, `Highlight` and `Hotkey`...
@@ -43,6 +43,10 @@
 
 [Checkout the demo](https://artplayer.org/) from Github Pages
 
+## Mobile Demo
+
+![mobile](./images/mobile.png)
+
 ## Document
 
 [Checkout the Document](https://artplayer.org/document) from Github Pages
@@ -63,14 +67,18 @@ $ yarn add artplayer
 
 ```js
 import Artplayer from 'artplayer';
-import 'artplayer/dist/artplayer.css';
 ```
 
 Or umd builds are also available:
 
 ```html
-<link rel="stylesheet" href="path/to/artplayer.css" />
 <script src="path/to/artplayer.js"></script>
+```
+
+Or from jsDelivr CDN:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/artplayer/dist/artplayer.js"></script>
 ```
 
 Will expose the global variable to `window.Artplayer`.
@@ -113,9 +121,10 @@ $ npm start
 
 We accept donations through these channels:
 
+![pay](./images/pay.png)
+
+-   [Patreon](https://www.patreon.com/artplayer)
 -   [Paypal](https://www.paypal.me/harveyzack)
--   [WeChat Pay](./images/wechatpay.jpg)
--   [Alipay](./images/alipay.jpg)
 
 ## QQ Group
 

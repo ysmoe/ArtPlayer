@@ -17,8 +17,8 @@ export default function eventInit(art, player) {
         player.toggle = true;
     });
 
-    config.events.forEach(eventName => {
-        proxy($video, eventName, event => {
+    config.events.forEach((eventName) => {
+        proxy($video, eventName, (event) => {
             art.emit(`video:${event.type}`, event);
         });
     });
@@ -33,6 +33,7 @@ export default function eventInit(art, player) {
     });
 
     art.once('video:canplay', () => {
+        art.loading.show = false;
         art.controls.show = true;
         art.mask.show = true;
         art.emit('ready');
@@ -84,9 +85,13 @@ export default function eventInit(art, player) {
 
     // });
 
-    art.on('video:loadedmetadata', () => {
-        if (option.autoSize) {
-            player.autoSize = true;
+    art.once('video:loadedmetadata', () => {
+        player.autoSize = option.autoSize;
+        if (art.isMobile) {
+            art.loading.show = false;
+            art.controls.show = true;
+            art.mask.show = true;
+            art.emit('ready');
         }
     });
 

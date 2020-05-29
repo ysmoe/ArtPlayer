@@ -1,4 +1,4 @@
-import { errorHandle, addClass } from '../utils';
+import { errorHandle, addClass, debounce, removeClass } from '../utils';
 import Component from '../utils/component';
 import fullscreen from './fullscreen';
 import fullscreenWeb from './fullscreenWeb';
@@ -12,6 +12,7 @@ import setting from './setting';
 import thumbnails from './thumbnails';
 import screenshot from './screenshot';
 import quality from './quality';
+import loop from './loop';
 
 export default class Control extends Component {
     constructor(art) {
@@ -19,9 +20,23 @@ export default class Control extends Component {
 
         this.name = 'control';
 
-        const { option } = art;
+        const {
+            option,
+            player,
+            template: { $player },
+        } = art;
 
-        art.on('ready', () => {
+        this.delayHide = debounce(() => {
+            if (player.playing && this.show) {
+                addClass($player, 'art-hide-cursor');
+                removeClass($player, 'art-hover');
+                this.show = false;
+            }
+        }, 3000);
+
+        this.cancelDelayHide = this.delayHide.clearTimeout;
+
+        art.once('ready', () => {
             this.add(
                 progress({
                     name: 'progress',
@@ -37,6 +52,15 @@ export default class Control extends Component {
                     disable: !option.thumbnails.url || option.isLive,
                     position: 'top',
                     index: 20,
+                }),
+            );
+
+            this.add(
+                loop({
+                    name: 'loop',
+                    disable: false,
+                    position: 'top',
+                    index: 30,
                 }),
             );
 
@@ -130,7 +154,7 @@ export default class Control extends Component {
                 }),
             );
 
-            option.controls.forEach(item => {
+            option.controls.forEach((item) => {
                 this.add(item);
             });
         });
@@ -158,7 +182,7 @@ export default class Control extends Component {
                 break;
         }
 
-        super.add(option, $ref => {
+        super.add(option, ($ref) => {
             if (
                 !option.disable &&
                 option.position !== 'top' &&
